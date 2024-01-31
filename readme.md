@@ -21,3 +21,7 @@ Subject information: <br>
 <sub> Group: 01 </sub> <br>
 <sub> Schedule: MW 01:30 PM – 04:30 PM CNLab </sub> <br>
 <sub> Faculty: Ma- Ed- Bu- </sub>
+
+<br><br><br>
+
+[![](https://visitcount.itsvg.in/api?id=jjsnippets-CPE1202&label=-CPE1202&color=12&icon=3&pretty=false)](https://visitcount.itsvg.in)
