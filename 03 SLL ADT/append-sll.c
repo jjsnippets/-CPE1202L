@@ -5,12 +5,12 @@
 #include <ctype.h>
 #include "phonebook-sll.h"
 
-void infoAdder(PBOOK* node);
+void infoAdder(NODE* singleNode);
 
-void appendPrcs (PBOOK** start, int* size){
+void appendPrcs (NODE** start, int* size){
 
     char confirm;
-    PBOOK* addNode = calloc(1, sizeof(PBOOK));
+    NODE* addNode = calloc(1, sizeof(NODE));
     addNode->next = NULL;
 
     infoAdder(addNode);
@@ -26,7 +26,7 @@ void appendPrcs (PBOOK** start, int* size){
     if(*size == 0){
         *start = addNode;
     } else {
-        PBOOK* lastNode = (*start);
+        NODE* lastNode = (*start);
 
         for(int i = 0; i < (*size) - 1; i++){
             lastNode = lastNode->next;
@@ -54,10 +54,10 @@ char* appendMenu(char* menu){
     return text;
 }
 
-void infoAdder(PBOOK* node){
-    strcpy(node->fname, appendMenu("Input First Name: "));
-    strcpy(node->mname, appendMenu("Input Middle Name: "));
-    strcpy(node->lname, appendMenu("Input Last Name: "));
-    strcpy(node->num, appendMenu("Input Mobile Number: "));
-    strcpy(node->email, appendMenu("Input Email: "));
+void infoAdder(NODE* singleNode){
+    strcpy(singleNode->fname, appendMenu("Input First Name: "));
+    strcpy(singleNode->mname, appendMenu("Input Middle Name: "));
+    strcpy(singleNode->lname, appendMenu("Input Last Name: "));
+    strcpy(singleNode->num, appendMenu("Input Mobile Number: "));
+    strcpy(singleNode->email, appendMenu("Input Email: "));
 }

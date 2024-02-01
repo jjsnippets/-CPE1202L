@@ -11,8 +11,8 @@
 
 void main(){
 
-    PBOOK* startPBook;
-    PBOOK* nodeDisplay;
+    NODE* startPBook;
+    NODE* nodeDisplay;
 
     int currSizePBook = 0;
     char userInput;
@@ -75,7 +75,7 @@ void mainMenuDisp() {
     printf("\n");
 }
 
-void saveToFile (PBOOK* all, int* size){
+void saveToFile (NODE* all, int* size){
     FILE* fp = fopen(FILENAME, "w");
     rewind(fp);
 

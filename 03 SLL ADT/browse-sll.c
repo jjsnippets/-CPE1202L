@@ -5,7 +5,7 @@
 #include <ctype.h>
 #include "phonebook-sll.h"
 
-void browsePrcs(PBOOK** start, int* size){
+void browsePrcs(NODE** start, int* size){
 
     char userInput = 'a';
     char* compare = calloc(100, sizeof(char));
@@ -14,7 +14,7 @@ void browsePrcs(PBOOK** start, int* size){
     char* separator = calloc(80, sizeof(char));
     memset(separator, '=', 79);
 
-    PBOOK* currentNode;
+    NODE* currentNode;
 
     do {
         inList = 0;
@@ -41,14 +41,15 @@ void browsePrcs(PBOOK** start, int* size){
                 break;
 
             case 'l':
-                printf("Input Last Name: ");
+            case 'n':
+                printf("Input %s: ", (userInput == 'l' ? "Last Name" : "Mobile Number"));
                 fflush(stdin);
                 scanf("%[^\n,]s", compare);
                 printf("\n");
 
                 for(int i = 0; i < *size; i++){
                     currentNode = (i == 0 ? *start : currentNode->next);
-                    if (strcmp(compare, currentNode->lname) == 0){
+                    if (strcmp(compare, (userInput == 'l' ? currentNode->lname : currentNode->num) ) == 0){
                         inList = 1;
                         break;
                     }
@@ -56,40 +57,13 @@ void browsePrcs(PBOOK** start, int* size){
                 }
 
                 if (!inList){
-                    printf("Last Name not found!\n");
+                    printf("%s not found!\n", (userInput == 'l' ? "Last Name" : "Mobile Number"));
                     break;
                 }
 
                 printf("%-15s %-15s %-15s %-15s %-15s\n", "Last Name", "First Name", "Middle Name", "Mobile No.", "Email Address");
                 printf("%s\n", separator);
                 printf("%-15s %-15s %-15s %-15s %-15s\n", currentNode->lname, currentNode->mname, currentNode->fname, currentNode->num, currentNode->email);
-                printf("\n");
-
-                break;
-
-            case 'n':
-                printf("Input Mobile Number: ");
-                fflush(stdin);
-                scanf("%[^\n,]s", compare);
-                printf("\n");
-
-                for(int i = 0; i < *size; i++){
-                    currentNode = (i == 0 ? *start : currentNode->next);
-                    if (strcmp(compare, currentNode->num) == 0){
-                        inList = 1;
-                        break;
-                    }
-
-                }
-
-                if (!inList){
-                    printf("Mobile Number not found!\n\n");
-                    break;
-                }
-
-                printf("%-15s %-15s %-15s %-15s %-15s\n", "Last Name", "First Name", "Middle Name", "Mobile No.", "Email Address");
-                printf("%s\n", separator);
-                printf("%-15s %-15s %-15s %-15s %-15s\n", currentNode->lname, currentNode->fname, currentNode->mname, currentNode->num, currentNode->email);
                 printf("\n");
 
                 break;
