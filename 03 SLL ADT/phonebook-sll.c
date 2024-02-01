@@ -48,11 +48,11 @@ void main(){
                 break;
 
             case 'c':
-                changePrcs(startPBook, &currSizePBook);
+                changePrcs(&startPBook, &currSizePBook);
                 break;
 
             case 'd':
-                deletePrcs(startPBook, &currSizePBook);
+                //deletePrcs(&startPBook, &currSizePBook);
                 break;
 
         }

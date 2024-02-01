@@ -5,7 +5,7 @@
 #include <ctype.h>
 #include "phonebook-sll.h"
 
-void deletePrcs (NODE* all, int* size){
+void deletePrcs (NODE** start, int* size){
 
     char userInput;
     char* compare = calloc(100, sizeof(char));

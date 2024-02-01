@@ -5,8 +5,6 @@
 #include <ctype.h>
 #include "phonebook-sll.h"
 
-void infoAdder(NODE* singleNode);
-
 void appendPrcs (NODE** start, int* size){
 
     char confirm;

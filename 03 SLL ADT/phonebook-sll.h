@@ -17,6 +17,7 @@
     // in append.c
     void appendPrcs (NODE** start, int* size);
     char* appendMenu(char* menu);
+    void infoAdder(NODE* singleNode);
 
     // in browse.c
     void displayChoiceMenu ();
@@ -24,9 +25,9 @@
 
     // in change.c
     void changeChoiceMenu ();
-    void changePrcs (NODE* start, int* size);
+    void changePrcs (NODE** start, int* size);
 
     // in delete.c
-    void deletePrcs (NODE* start, int* size);
+    void deletePrcs (NODE** start, int* size);
 
 #endif

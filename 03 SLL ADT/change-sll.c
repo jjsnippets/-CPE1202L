@@ -5,14 +5,16 @@
 #include <ctype.h>
 #include "phonebook-sll.h"
 
-void changePrcs (NODE* all, int* size){
+void changePrcs (NODE** start, int* size){
 
     char userInput;
     char* compare = calloc(100, sizeof(char));
-    int inList = 0, indexList;
+    int inList = 0, indexNode;
 
     char* separator = calloc(80, sizeof(char));
     memset(separator, '=', 79);
+
+    NODE* currentNode;
 
     do {
         inList = 0;
@@ -25,48 +27,23 @@ void changePrcs (NODE* all, int* size){
 
         switch (userInput) {
             case 'l':
-
-                printf("Input Last Name: ");
-                fflush(stdin);
-                scanf("%[^\n,]s", compare);
-                printf("\n");
-
-                for(int i = 0; i < *size; i++){
-                    if (strcmp(compare, all[i].lname) == 0){
-                        inList = 1;
-                        indexList = i;
-                        break;
-                    }
-                }
-
-                if (!inList){
-                    printf("Last Name not found!\n");
-                    fflush(stdin);
-                    getche();
-                    free(compare);
-                    free(separator);
-                    return;
-                }
-
-                break;
-
             case 'n':
 
-                printf("Input Mobile Number: ");
+                printf("Input %s: ", (userInput == 'l' ? "Last Name" : "Mobile Number"));
                 fflush(stdin);
                 scanf("%[^\n,]s", compare);
                 printf("\n");
 
                 for(int i = 0; i < *size; i++){
-                    if (strcmp(compare, all[i].num) == 0){
+                    currentNode = (i == 0 ? *start : currentNode->next);
+                    if (strcmp(compare, (userInput == 'l' ? currentNode->lname : currentNode->num) ) == 0){
                         inList = 1;
-                        indexList = i;
                         break;
                     }
                 }
 
                 if (!inList){
-                    printf("Mobile number not found!\n");
+                    printf("%s not found!\n", (userInput == 'l' ? "Last Name" : "Mobile Number"));
                     fflush(stdin);
                     getche();
                     free(compare);
@@ -80,13 +57,12 @@ void changePrcs (NODE* all, int* size){
                 free(compare);
                 free(separator);
                 return;
-
         }
 
         printf("\n");
         printf("%-15s %-15s %-15s %-15s %-15s\n", "Last Name", "First Name", "Middle Name", "Mobile No.", "Email Address");
         printf("%s\n", separator);
-        printf("%-15s %-15s %-15s %-15s %-15s\n", all[indexList].lname, all[indexList].mname, all[indexList].fname, all[indexList].num, all[indexList].email);
+        printf("%-15s %-15s %-15s %-15s %-15s\n", currentNode->lname, currentNode->mname, currentNode->fname, currentNode->num, currentNode->email);
         printf("\n");
 
         changeChoiceMenu();
@@ -102,30 +78,30 @@ void changePrcs (NODE* all, int* size){
 
         switch (userInput) {
         case 'l':
-            strcpy(all[indexList].lname, compare);
+            strcpy(currentNode->lname, compare);
             break;
 
         case 'm':
-            strcpy(all[indexList].mname, compare);
+            strcpy(currentNode->mname, compare);
             break;
 
         case 'f':
-            strcpy(all[indexList].fname, compare);
+            strcpy(currentNode->fname, compare);
             break;
 
         case 'n':
-            strcpy(all[indexList].num, compare);
+            strcpy(currentNode->num, compare);
             break;
 
         case 'e':
-            strcpy(all[indexList].email, compare);
+            strcpy(currentNode->email, compare);
             break;
         }
 
         printf("\n");
         printf("%-15s %-15s %-15s %-15s %-15s\n", "Last Name", "First Name", "Middle Name", "Mobile No.", "Email Address");
         printf("%s\n", separator);
-        printf("%-15s %-15s %-15s %-15s %-15s\n", all[indexList].lname, all[indexList].mname, all[indexList].fname, all[indexList].num, all[indexList].email);
+        printf("%-15s %-15s %-15s %-15s %-15s\n", currentNode->lname, currentNode->fname, currentNode->mname, currentNode->num, currentNode->email);
         printf("\n\n");
 
         //saveToFile(all, size);
