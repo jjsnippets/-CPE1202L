@@ -16,62 +16,44 @@ void deletePrcs (NODE** start, int* size){
     userInput = tolower(getche());
     printf("\n\n");
 
+    NODE* previousNode, * removeNode;
+    // remove node also acts as the currentNode;
 
     switch (userInput) {
         case 'l':
-
-            printf("Input Last Name: ");
-            fflush(stdin);
-            scanf("%[^\n,]s", compare);
-            printf("\n");
-
-            for(int i = 0; i < *size; i++){
-                if (strcmp(compare, all[i].lname) == 0){
-                    inList = 1;
-                    indexList = i;
-                    break;
-                }
-            }
-
-            if (!inList){
-                printf("Last Name not found!\n");
-                fflush(stdin);
-                getche();
-                free(compare);
-                return;
-            }
-
-            break;
-
         case 'n':
 
-            printf("Input Mobile Number: ");
+            printf("Input %s: ", (userInput == 'l' ? "Last Name" : "Mobile Number"));
             fflush(stdin);
             scanf("%[^\n,]s", compare);
             printf("\n");
 
-            for(int i = 0; i < *size; i++){
-                if (strcmp(compare, all[i].num) == 0){
+            removeNode = *start;
+            if (strcmp(compare, (userInput == 'l' ? removeNode->lname : removeNode->num) ) == 0)
+                inList = 1;
+
+            for(int i = 0; i < (*size - 1); i++){
+                previousNode = (i == 0 ? *start : previousNode->next);
+                removeNode = previousNode->next;
+                if (strcmp(compare, (userInput == 'l' ? previousNode->lname : previousNode->num) ) == 0){
                     inList = 1;
-                    indexList = i;
                     break;
                 }
             }
 
             if (!inList){
-                printf("Mobile number not found!\n");
+                printf("%s not found!\n", (userInput == 'l' ? "Last Name" : "Mobile Number"));
                 fflush(stdin);
                 getche();
                 free(compare);
                 return;
             }
 
-            break;
+        break;
 
         default:
             free(compare);
             return;
-
     }
 
     for(int i = indexList; i < (*size - 1); i++){
