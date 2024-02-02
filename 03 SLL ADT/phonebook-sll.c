@@ -20,14 +20,13 @@ void main(){
     while (1){
 
         mainMenuDisp();
-        printf("He\n");
 
+        /* debug window
         for(int i = 0; i < currSizePBook; i++){
             nodeDisplay = (i == 0 ? startPBook : nodeDisplay->next);
             printf("%s %s %s %s %s [%d]\n", nodeDisplay->lname, nodeDisplay->fname, nodeDisplay->mname,nodeDisplay->num, nodeDisplay->email, currSizePBook);
         }
-
-        printf("Ho\n");
+        */
 
         fflush(stdin);
         userInput = tolower(getche());

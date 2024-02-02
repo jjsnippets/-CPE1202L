@@ -31,8 +31,8 @@ void deletePrcs (NODE** start, int* size){
             removeNode = *start;
             if (strcmp(compare, (userInput == 'l' ? removeNode->lname : removeNode->num) ) == 0)
                 inList = 1;
-                
-            for(int i = 1; i < (*size) && !inList; i++){
+
+            for(int i = 0; i < (*size - 1) && !inList; i++){
                 previousNode = (i == 0 ? *start : previousNode->next);
                 removeNode = previousNode->next;
                 if (strcmp(compare, (userInput == 'l' ? removeNode->lname : removeNode->num) ) == 0){
