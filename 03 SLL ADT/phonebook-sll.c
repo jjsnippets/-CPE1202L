@@ -52,7 +52,7 @@ void main(){
                 break;
 
             case 'd':
-                //deletePrcs(&startPBook, &currSizePBook);
+                deletePrcs(&startPBook, &currSizePBook);
                 break;
 
         }

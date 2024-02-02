@@ -17,7 +17,8 @@ void deletePrcs (NODE** start, int* size){
     printf("\n\n");
 
     NODE* previousNode, * removeNode;
-    // remove node also acts as the currentNode;
+    NODE* currentNode;
+    // remove node also acts as the currentNode
 
     switch (userInput) {
         case 'l':
@@ -35,7 +36,7 @@ void deletePrcs (NODE** start, int* size){
             for(int i = 0; i < (*size - 1); i++){
                 previousNode = (i == 0 ? *start : previousNode->next);
                 removeNode = previousNode->next;
-                if (strcmp(compare, (userInput == 'l' ? previousNode->lname : previousNode->num) ) == 0){
+                if (strcmp(compare, (userInput == 'l' ? removeNode->lname : removeNode->num) ) == 0){
                     inList = 1;
                     break;
                 }
@@ -49,19 +50,19 @@ void deletePrcs (NODE** start, int* size){
                 return;
             }
 
+            if (*size == 1){
+                free(*start);
+                *start = NULL;
+            } else {
+                previousNode->next = removeNode->next;
+                free(removeNode);
+            }
+
         break;
 
         default:
             free(compare);
             return;
-    }
-
-    for(int i = indexList; i < (*size - 1); i++){
-        strcpy(all[i].fname, all[i + 1].fname);
-        strcpy(all[i].mname, all[i + 1].mname);
-        strcpy(all[i].lname, all[i + 1].lname);
-        strcpy(all[i].num, all[i + 1].num);
-        strcpy(all[i].email, all[i + 1].email);
     }
 
     (*size)--;
