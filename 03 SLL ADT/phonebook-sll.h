@@ -1,4 +1,4 @@
-// gcc -o phonebook-sll.exe -g phonebook-sll.c append-sll.c browse-sll.c change-sll.c delete-sll.c
+// gcc -o phonebook-sll.exe -g phonebook-sll.c append-sll.c browse-sll.c change-sll.c delete-sll.c filehandling-sll.c
 
 #ifndef PHONEBOOK_SLL_H
     #define PHONEBOOK_SLL_H
@@ -12,24 +12,27 @@
         struct node* next;
     } NODE;
 
-    // in phonebook.c
+    // in phonebook-sll.c
     void mainMenuDisp();
-    void saveToFile (NODE** start, int* size);
 
-    // in append.c
+    // in append-sll.c
     void appendPrcs (NODE** start, int* size);
     char* appendMenu(char* menu);
     void infoAdder(NODE* singleNode);
 
-    // in browse.c
+    // in browse-sll.c
     void displayChoiceMenu ();
     void browsePrcs (NODE** start, int* size);
 
-    // in change.c
+    // in change-sll.c
     void changeChoiceMenu ();
     void changePrcs (NODE** start, int* size);
 
-    // in delete.c
+    // in delete-sll.c
     void deletePrcs (NODE** start, int* size);
+
+    // in filehandling-sll.c
+    void loadFromFile (NODE** start, int* size);
+    void saveToFile (NODE** start, int* size);
 
 #endif

@@ -49,10 +49,7 @@ void deletePrcs (NODE** start, int* size){
                 return;
             }
 
-            if (*size == 1){
-                free(*start);
-                *start = NULL;
-            } else if (removeNode == *start) {
+            if (removeNode == *start) {
                 *start = removeNode->next;
                 free(removeNode);
             } else {

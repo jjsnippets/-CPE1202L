@@ -5,7 +5,7 @@
 #include <ctype.h>
 #include "phonebook-sll.h"
 
-#define FILENAME "phonebook.txt"
+
 
 void main(){
 
@@ -14,6 +14,8 @@ void main(){
 
     int currSizePBook = 0;
     char userInput;
+
+    loadFromFile(&startPBook, &currSizePBook);
 
     while (1){
 
@@ -71,20 +73,4 @@ void mainMenuDisp() {
     printf("[D]elete\n");
     printf("[E]xit\n");
     printf("\n");
-}
-
-void saveToFile (NODE** start, int* size){
-    NODE* currentNode;
-
-    FILE* fp = fopen(FILENAME, "w");
-    rewind(fp);
-
-    fprintf(fp, ",lname,mname,fname,num,email\n");
-
-    for(int i = 0; i < *size; i++){
-        currentNode = (i == 0 ? *start : currentNode->next);
-        fprintf(fp, "%d,%s,%s,%s,%s,%s\n", i, currentNode->lname, currentNode->fname, currentNode->mname,currentNode->num, currentNode->email);
-    }
-
-    fclose(fp);
 }
