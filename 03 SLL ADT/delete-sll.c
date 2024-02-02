@@ -17,8 +17,7 @@ void deletePrcs (NODE** start, int* size){
     printf("\n\n");
 
     NODE* previousNode, * removeNode;
-    NODE* currentNode;
-    // remove node also acts as the currentNode
+    // removeNode also acts as the currentNode
 
     switch (userInput) {
         case 'l':
@@ -67,7 +66,7 @@ void deletePrcs (NODE** start, int* size){
 
     (*size)--;
 
-    //saveToFile(all, size);
+    saveToFile(start, size);
     printf("Entry Successfully deleted!\n");
     fflush(stdin);
     getche();

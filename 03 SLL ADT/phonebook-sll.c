@@ -7,8 +7,6 @@
 
 #define FILENAME "phonebook.txt"
 
-// gcc -o phonebook-sll.exe -g phonebook-sll.c append-sll.c browse-sll.c change-sll.c delete-sll.c
-
 void main(){
 
     NODE* startPBook;
@@ -59,7 +57,7 @@ void main(){
 
     }
 
-    //saveToFile(startPBook, &currSizePBook);
+    saveToFile(&startPBook, &currSizePBook);
     free(startPBook);
 
 }
@@ -75,14 +73,17 @@ void mainMenuDisp() {
     printf("\n");
 }
 
-void saveToFile (NODE* all, int* size){
+void saveToFile (NODE** start, int* size){
+    NODE* currentNode;
+
     FILE* fp = fopen(FILENAME, "w");
     rewind(fp);
 
     fprintf(fp, ",lname,mname,fname,num,email\n");
 
     for(int i = 0; i < *size; i++){
-        fprintf(fp, "%d,%s,%s,%s,%s,%s\n", i, all[i].lname, all[i].mname, all[i].fname, all[i].num, all[i].email);
+        currentNode = (i == 0 ? *start : currentNode->next);
+        fprintf(fp, "%d,%s,%s,%s,%s,%s\n", i, currentNode->lname, currentNode->fname, currentNode->mname,currentNode->num, currentNode->email);
     }
 
     fclose(fp);

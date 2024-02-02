@@ -104,7 +104,7 @@ void changePrcs (NODE** start, int* size){
         printf("%-15s %-15s %-15s %-15s %-15s\n", currentNode->lname, currentNode->fname, currentNode->mname, currentNode->num, currentNode->email);
         printf("\n\n");
 
-        //saveToFile(all, size);
+        saveToFile(start, size);
         printf("Again [Y/N]\n");
         fflush(stdin);
         userInput = tolower(getche());

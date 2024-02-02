@@ -1,3 +1,5 @@
+// gcc -o phonebook-sll.exe -g phonebook-sll.c append-sll.c browse-sll.c change-sll.c delete-sll.c
+
 #ifndef PHONEBOOK_SLL_H
     #define PHONEBOOK_SLL_H
 
@@ -12,7 +14,7 @@
 
     // in phonebook.c
     void mainMenuDisp();
-    void saveToFile (NODE* start, int* size);
+    void saveToFile (NODE** start, int* size);
 
     // in append.c
     void appendPrcs (NODE** start, int* size);

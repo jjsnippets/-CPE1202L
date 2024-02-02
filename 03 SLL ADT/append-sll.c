@@ -35,8 +35,7 @@ void appendPrcs (NODE** start, int* size){
 
     (*size)++;
 
-    //saveToFile(all, size, maxSize);
-    //saveToFile(all, size);
+    saveToFile(start, size);
     printf("\n\nSaved successfully\n");
     fflush(stdin);
     getche();
