@@ -20,6 +20,8 @@ void browsePrcs(NODE** start, int* size){
         displayChoiceMenu();
         fflush(stdin);
         userInput = tolower(getche());
+        printf("\n\n");
+
 
         switch (userInput) {
             case 'b':
@@ -44,7 +46,8 @@ void browsePrcs(NODE** start, int* size){
                 }
 
                 if (!inList){
-                    printf("%s not found!\n", (userInput == 'l' ? "Last Name" : "Mobile Number"));
+                    printf("%s not found!\n\n", (userInput == 'l' ? "Last Name" : "Mobile Number"));
+                    printf("Press any key to continue\n");
                     break;
                 }
 
@@ -56,6 +59,7 @@ void browsePrcs(NODE** start, int* size){
         printf("Again [Y/N]\n");
         fflush(stdin);
         userInput = tolower(getche());
+        printf("\n\n");
 
     } while ( userInput != 'n');
 
@@ -66,7 +70,6 @@ void browsePrcs(NODE** start, int* size){
 
 void displayChoiceMenu(){
 
-    printf("\n\n");
     printf("[B]rowse All\n");
     printf("[L] Browse by Last Name\n");
     printf("[N] Browse by Mobile Number\n");

@@ -29,6 +29,7 @@ void loadFromFile (NODE** start, int* size){
 
     if (fp == NULL){
        printf("A file named \"%s\" was not found. This will be automatically made after using this program.\n", FILENAME);
+       printf("Press any key to continue\n");
        getche();
        fclose(fp);
        return;
@@ -38,6 +39,7 @@ void loadFromFile (NODE** start, int* size){
     fgets(row, 1000, fp);
     if (strcmp(row, ",lname,mname,fname,num,email\n") != 0){
         printf("File format of \"%s\" is wrong. No data will be loaded in.\n", FILENAME);
+        printf("Press any key to continue\n");
         getche();
         fclose(fp);
         return;
@@ -72,6 +74,7 @@ void loadFromFile (NODE** start, int* size){
     }
 
     printf("Data from \"%s\" successfully loaded!\n", FILENAME);
+    printf("Press any key to continue\n");
     getche();
     fclose(fp);
 

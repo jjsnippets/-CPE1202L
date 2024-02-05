@@ -11,7 +11,7 @@ void deletePrcs (NODE** start, int* size){
     char* compare = calloc(100, sizeof(char));
     int inList = 0, indexList;
 
-    printf("\n[L] Search by Last Name\n[N] Search by Mobile Number\n");
+    printf("[L] Search by Last Name\n[N] Search by Mobile Number\n");
     fflush(stdin);
     userInput = tolower(getche());
     printf("\n\n");
@@ -43,6 +43,7 @@ void deletePrcs (NODE** start, int* size){
 
             if (!inList){
                 printf("%s not found!\n", (userInput == 'l' ? "Last Name" : "Mobile Number"));
+                printf("Press any key to continue\n");
                 fflush(stdin);
                 getche();
                 free(compare);
@@ -68,6 +69,7 @@ void deletePrcs (NODE** start, int* size){
 
     saveToFile(start, size);
     printf("Entry Successfully deleted!\n");
+    printf("Press any key to continue\n");
     fflush(stdin);
     getche();
 

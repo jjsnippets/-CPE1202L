@@ -17,7 +17,7 @@ void changePrcs (NODE** start, int* size){
         inList = 0;
         memset(compare, '\0', 100);
 
-        printf("\n[L] Search by Last Name\n[N] Search by Mobile Number\n");
+        printf("[L] Search by Last Name\n[N] Search by Mobile Number\n");
         fflush(stdin);
         userInput = tolower(getche());
         printf("\n\n");
@@ -41,6 +41,7 @@ void changePrcs (NODE** start, int* size){
 
                 if (!inList){
                     printf("%s not found!\n", (userInput == 'l' ? "Last Name" : "Mobile Number"));
+                    printf("Press any key to continue\n");
                     fflush(stdin);
                     getche();
                     free(compare);
@@ -65,7 +66,6 @@ void changePrcs (NODE** start, int* size){
         fflush(stdin);
         memset(compare, '\0', 100);
         scanf("%[^\n,]s", compare);
-        printf("\n");
 
         switch (userInput) {
         case 'l':

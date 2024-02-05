@@ -37,6 +37,7 @@ void appendPrcs (NODE** start, int* size){
 
     saveToFile(start, size);
     printf("\n\nSaved successfully\n");
+    printf("Press any key to continue\n");
     fflush(stdin);
     getche();
 

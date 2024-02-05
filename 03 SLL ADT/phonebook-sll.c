@@ -5,8 +5,6 @@
 #include <ctype.h>
 #include "phonebook-sll.h"
 
-
-
 void main(){
 
     NODE* startPBook;
@@ -20,13 +18,6 @@ void main(){
     while (1){
 
         mainMenuDisp();
-
-        /* debug window
-        for(int i = 0; i < currSizePBook; i++){
-            nodeDisplay = (i == 0 ? startPBook : nodeDisplay->next);
-            printf("%s %s %s %s %s [%d]\n", nodeDisplay->lname, nodeDisplay->fname, nodeDisplay->mname,nodeDisplay->num, nodeDisplay->email, currSizePBook);
-        }
-        */
 
         fflush(stdin);
         userInput = tolower(getche());
@@ -71,5 +62,4 @@ void mainMenuDisp() {
     printf("[C]hange\n");
     printf("[D]elete\n");
     printf("[E]xit\n");
-    printf("\n");
 }
