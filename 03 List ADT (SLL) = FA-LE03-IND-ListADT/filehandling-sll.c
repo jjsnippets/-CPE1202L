@@ -35,7 +35,7 @@ void loadFromFile (NODE** start, int* size){
        return;
     }
 
-    // minimal error correction: checks if header is correct
+    // minimal error checking: checks if header is correct
     fgets(row, 1000, fp);
     if (strcmp(row, ",lname,mname,fname,num,email\n") != 0){
         printf("File format of \"%s\" is wrong. No data will be loaded in.\n", FILENAME);
