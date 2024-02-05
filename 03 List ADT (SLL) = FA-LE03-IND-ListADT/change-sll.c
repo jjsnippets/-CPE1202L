@@ -9,7 +9,7 @@ void changePrcs (NODE** start, int* size){
 
     char userInput;
     char* compare = calloc(100, sizeof(char));
-    int inList = 0, indexNode;
+    int inList = 0;
 
     NODE* currentNode;
 

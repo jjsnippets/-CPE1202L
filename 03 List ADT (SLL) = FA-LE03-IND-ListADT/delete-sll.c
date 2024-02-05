@@ -9,7 +9,7 @@ void deletePrcs (NODE** start, int* size){
 
     char userInput;
     char* compare = calloc(100, sizeof(char));
-    int inList = 0, indexList;
+    int inList = 0;
 
     printf("[L] Search by Last Name\n[N] Search by Mobile Number\n");
     fflush(stdin);
