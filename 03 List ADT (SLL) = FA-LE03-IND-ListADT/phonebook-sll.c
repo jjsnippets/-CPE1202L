@@ -11,6 +11,7 @@ void main(){
     NODE* nodeDisplay;
 
     int currSizePBook = 0;
+        // implementation with a separate variable that keeps track of the number of nodes in the linked list
     char userInput;
 
     loadFromFile(&startPBook, &currSizePBook);
