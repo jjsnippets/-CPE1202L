@@ -11,9 +11,6 @@ void browsePrcs(NODE** start, int* size){
     char* compare = calloc(100, sizeof(char));
     int inList;
 
-    char* separator = calloc(80, sizeof(char));
-    memset(separator, '=', 79);
-
     NODE* currentNode;
 
     do {
@@ -24,20 +21,10 @@ void browsePrcs(NODE** start, int* size){
         fflush(stdin);
         userInput = tolower(getche());
 
-        printf("\n");
-
         switch (userInput) {
             case 'b':
-                printf("%-15s %-15s %-15s %-15s %-15s\n", "Last Name", "First Name", "Middle Name", "Mobile No.", "Email Address");
-                printf("%s\n", separator);
 
-                for(int i = 0; i < *size; i++){
-                    currentNode = (i == 0 ? *start : currentNode->next);
-                    printf("%-15s %-15s %-15s %-15s %-15s\n", currentNode->lname, currentNode->fname, currentNode->mname,currentNode->num, currentNode->email);
-                }
-
-                printf("\n");
-
+                displayTable(*start, 1);
                 break;
 
             case 'l':
@@ -61,12 +48,9 @@ void browsePrcs(NODE** start, int* size){
                     break;
                 }
 
-                printf("%-15s %-15s %-15s %-15s %-15s\n", "Last Name", "First Name", "Middle Name", "Mobile No.", "Email Address");
-                printf("%s\n", separator);
-                printf("%-15s %-15s %-15s %-15s %-15s\n", currentNode->lname, currentNode->mname, currentNode->fname, currentNode->num, currentNode->email);
-                printf("\n");
-
+                displayTable(currentNode, 0);
                 break;
+
         }
 
         printf("Again [Y/N]\n");
@@ -76,12 +60,9 @@ void browsePrcs(NODE** start, int* size){
     } while ( userInput != 'n');
 
     free(compare);
-    free(separator);
     return;
 
 }
-
-
 
 void displayChoiceMenu(){
 
@@ -89,5 +70,26 @@ void displayChoiceMenu(){
     printf("[B]rowse All\n");
     printf("[L] Browse by Last Name\n");
     printf("[N] Browse by Mobile Number\n");
+
+}
+
+void displayTable(NODE* currentNode, int showAll){
+
+    char* separator = calloc(80, sizeof(char));
+    memset(separator, '=', 79);
+
+    printf("%-15s %-15s %-15s %-15s %-15s\n", "Last Name", "First Name", "Middle Name", "Mobile No.", "Email Address");
+    printf("%s\n", separator);
+
+    for(int i = 0; currentNode != NULL; i++){
+        printf("%-15s %-15s %-15s %-15s %-15s\n", currentNode->lname, currentNode->fname, currentNode->mname,currentNode->num, currentNode->email);
+        currentNode = currentNode->next;
+        if (!showAll) break;
+    }
+
+    printf("\n");
+
+    free(separator);
+    return;
 
 }

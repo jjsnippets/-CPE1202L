@@ -11,9 +11,6 @@ void changePrcs (NODE** start, int* size){
     char* compare = calloc(100, sizeof(char));
     int inList = 0, indexNode;
 
-    char* separator = calloc(80, sizeof(char));
-    memset(separator, '=', 79);
-
     NODE* currentNode;
 
     do {
@@ -47,7 +44,6 @@ void changePrcs (NODE** start, int* size){
                     fflush(stdin);
                     getche();
                     free(compare);
-                    free(separator);
                     return;
                 }
 
@@ -55,15 +51,10 @@ void changePrcs (NODE** start, int* size){
 
             default:
                 free(compare);
-                free(separator);
                 return;
         }
 
-        printf("\n");
-        printf("%-15s %-15s %-15s %-15s %-15s\n", "Last Name", "First Name", "Middle Name", "Mobile No.", "Email Address");
-        printf("%s\n", separator);
-        printf("%-15s %-15s %-15s %-15s %-15s\n", currentNode->lname, currentNode->mname, currentNode->fname, currentNode->num, currentNode->email);
-        printf("\n");
+        displayTable(currentNode, 0);
 
         changeChoiceMenu();
         fflush(stdin);
@@ -98,11 +89,7 @@ void changePrcs (NODE** start, int* size){
             break;
         }
 
-        printf("\n");
-        printf("%-15s %-15s %-15s %-15s %-15s\n", "Last Name", "First Name", "Middle Name", "Mobile No.", "Email Address");
-        printf("%s\n", separator);
-        printf("%-15s %-15s %-15s %-15s %-15s\n", currentNode->lname, currentNode->fname, currentNode->mname, currentNode->num, currentNode->email);
-        printf("\n\n");
+        displayTable(currentNode, 0);
 
         saveToFile(start, size);
         printf("Again [Y/N]\n");
@@ -113,8 +100,6 @@ void changePrcs (NODE** start, int* size){
     } while (userInput != 'n');
 
     free(compare);
-    free(separator);
-
 }
 
 void changeChoiceMenu (){

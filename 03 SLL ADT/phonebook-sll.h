@@ -23,6 +23,7 @@
     // in browse-sll.c
     void displayChoiceMenu ();
     void browsePrcs (NODE** start, int* size);
+    void displayTable (NODE* start, int showAll);
 
     // in change-sll.c
     void changeChoiceMenu ();
