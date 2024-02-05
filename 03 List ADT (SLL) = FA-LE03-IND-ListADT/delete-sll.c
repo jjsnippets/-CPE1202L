@@ -17,7 +17,7 @@ void deletePrcs (NODE** start, int* size){
     printf("\n\n");
 
     NODE* previousNode, * removeNode;
-    // removeNode also acts as the currentNode
+        // removeNode also acts as the currentNode
 
     switch (userInput) {
         case 'l':
@@ -28,12 +28,16 @@ void deletePrcs (NODE** start, int* size){
             scanf("%[^\n,]s", compare);
             printf("\n");
 
+            // special case where there is only one node
             removeNode = *start;
             if (strcmp(compare, (userInput == 'l' ? removeNode->lname : removeNode->num) ) == 0)
                 inList = 1;
 
+            // for loop that deals with the rest of the nodes in the linked list
+            // skips when the first element is already a match
             for(int i = 0; i < (*size - 1) && !inList; i++){
                 previousNode = (i == 0 ? *start : previousNode->next);
+                    // initializes to start, then moves along the linked list afterwards
                 removeNode = previousNode->next;
                 if (strcmp(compare, (userInput == 'l' ? removeNode->lname : removeNode->num) ) == 0){
                     inList = 1;
@@ -41,6 +45,7 @@ void deletePrcs (NODE** start, int* size){
                 }
             }
 
+            // if not found, return to main
             if (!inList){
                 printf("%s not found!\n", (userInput == 'l' ? "Last Name" : "Mobile Number"));
                 printf("Press any key to continue\n");
@@ -51,9 +56,11 @@ void deletePrcs (NODE** start, int* size){
             }
 
             if (removeNode == *start) {
+                    // special case where the match is the first node
                 *start = removeNode->next;
                 free(removeNode);
             } else {
+                    // otherwise
                 previousNode->next = removeNode->next;
                 free(removeNode);
             }
