@@ -16,6 +16,7 @@ void changePrcs (NODE** start, int* size){
     do {
         inList = 0;
         memset(compare, '\0', 100);
+            //initializes variables
 
         printf("[L] Search by Last Name\n[N] Search by Mobile Number\n");
         fflush(stdin);
@@ -31,6 +32,7 @@ void changePrcs (NODE** start, int* size){
                 scanf("%[^\n,]s", compare);
                 printf("\n");
 
+                // reimplementation from browse-sll.c
                 for(int i = 0; i < *size; i++){
                     currentNode = (i == 0 ? *start : currentNode->next);
                     if (strcmp(compare, (userInput == 'l' ? currentNode->lname : currentNode->num) ) == 0){
@@ -39,6 +41,7 @@ void changePrcs (NODE** start, int* size){
                     }
                 }
 
+                // when not found, return to main
                 if (!inList){
                     printf("%s not found!\n", (userInput == 'l' ? "Last Name" : "Mobile Number"));
                     printf("Press any key to continue\n");
@@ -51,6 +54,7 @@ void changePrcs (NODE** start, int* size){
                 break;
 
             default:
+                    // when neither l or n, return to main
                 free(compare);
                 return;
         }
@@ -67,6 +71,7 @@ void changePrcs (NODE** start, int* size){
         memset(compare, '\0', 100);
         scanf("%[^\n,]s", compare);
 
+        // change individual field
         switch (userInput) {
         case 'l':
             strcpy(currentNode->lname, compare);
