@@ -50,9 +50,9 @@ void loadFromFile (NODE** start, int* size){
 
         // grabs individual values from rows
         strtok(row, ","); // skips index
+        strcpy(addNode->lname, strtok(NULL, ","));
         strcpy(addNode->fname, strtok(NULL, ","));
         strcpy(addNode->mname, strtok(NULL, ","));
-        strcpy(addNode->lname, strtok(NULL, ","));
         strcpy(addNode->num, strtok(NULL, ","));
         strcpy(addNode->email, strtok(NULL, "\n"));
 
