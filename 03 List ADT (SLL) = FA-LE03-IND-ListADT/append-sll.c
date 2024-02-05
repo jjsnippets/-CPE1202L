@@ -11,6 +11,7 @@ void appendPrcs (NODE** start, int* size){
     NODE* addNode = calloc(1, sizeof(NODE));
     addNode->next = NULL;
 
+    // fills in node fields
     infoAdder(addNode);
 
     printf("\nSave record [Y/N]?\n");
@@ -22,15 +23,20 @@ void appendPrcs (NODE** start, int* size){
     }
 
     if(*size == 0){
+            // special case when it is the first node to be added
         *start = addNode;
     } else {
+        // determines the last node in the linked list
+        // gets reused in filehandling-sll.c
         NODE* lastNode = (*start);
 
         for(int i = 0; i < (*size) - 1; i++){
             lastNode = lastNode->next;
         }
 
+        
         lastNode->next = addNode;
+            // adds the new node into the linked list
     }
 
     (*size)++;
