@@ -11,10 +11,15 @@ typedef struct node {
 
 typedef struct queue {
     NODE* current;
-    NODE* next;
+    struct queue* next;
 } QUEUE;
 
 void displayNode(NODE* toShow);
+void displayAll(NODE* root, int size);
+
+void enqueue(QUEUE** head, NODE* toAdd);
+NODE* dequeue(QUEUE** head);
+
 void addNode(NODE** root, int data, int size);
 
 void main(){
@@ -24,20 +29,19 @@ void main(){
 
     int list[] = {3, 5, 7, 1, 4, 8, 2, 6};
 
-    addNode(&root, 3, count++);
-    addNode(&root, 4, count++);
-    addNode(&root, 5, count++);
+    for (int i = 1; i < 9; i++)
+        addNode(&root, i, count++);
 
-    displayNode(root);
-    printf("{%d}", count);
+    displayAll(root, count);
 
-    getche();
+    printf("Successfully ran!");
 
 }
 
 void displayNode(NODE* toShow){
 
-    printf("[%d %ld %ld %ld]\n", toShow->x, toShow, toShow->left, toShow->right);
+    // debug
+    // printf("[%d %ld %ld %ld]\n", toShow->x, toShow, toShow->left, toShow->right);
 
     printf("Parent: %d\n", toShow->x);
 
@@ -46,15 +50,67 @@ void displayNode(NODE* toShow){
     if (toShow->right)
         printf("\tRight child: %d\n", toShow->right->x);
 
+    printf("\n");
+
+}
+
+void displayAll(NODE* root, int size){
+
+    if (!size) return;
+    
+    QUEUE* bft = calloc(1, sizeof(QUEUE));
+    NODE* display;
+    enqueue(&bft, root);
+
+    while(size--){
+
+        display = dequeue(&bft);
+        displayNode(display);
+        
+        if (display->left) enqueue(&bft, display->left);
+        if (display->right) enqueue(&bft, display->right);
+
+    }
+    free(bft);
+}
+
+void enqueue(QUEUE** head, NODE* toAdd){
+
+    if (!(*head)->current){
+        (*head)->current = toAdd;
+        return;
+    }
+
+    QUEUE* lastQueue = *head;
+    QUEUE* insertEnd = calloc(1, sizeof(QUEUE));
+    insertEnd->current = toAdd;
+
+    while (lastQueue->next)
+        lastQueue = lastQueue->next;
+
+    lastQueue->next = insertEnd;
+
+}
+
+NODE* dequeue(QUEUE** head){
+
+    NODE* result = calloc(1, sizeof(NODE));
+    result = (*head)->current;
+
+    QUEUE* newHead = (*head)->next ? (*head)->next : calloc(1, sizeof(QUEUE));
+
+    (*head) = newHead;
+    return result;
 }
 
 void addNode(NODE** root, int data, int size){
 
-    printf("{%d %d}: ", data, size);
+    int movement = 1;
+    for (int i = (size+1) >> 1; i > 0; movement <<= 1, i >>= 1);
+    movement >>= 1;
     
     NODE* newNode = calloc(1, sizeof(NODE));
     newNode->x = data;
-    displayNode(newNode);
 
     if (!size){
         *root = newNode;
@@ -63,11 +119,18 @@ void addNode(NODE** root, int data, int size){
 
     NODE* currentNode = *root;
 
-    for (; size > 3; size >>= 1){
-        (size % 2) ? (currentNode = currentNode->left) : (currentNode->right);
+    for (; movement > 1; movement >>= 1){
+
+        if ((size+1) & movement){
+            (currentNode = currentNode->right);
+        } else {
+            (currentNode = currentNode->left);
+        }
     }
 
-    (size % 2) ? (currentNode->left = newNode) : (currentNode->right = newNode);
-    printf("\n");
-
+    if (size % 2){
+            (currentNode->left = newNode);
+    } else {
+            (currentNode->right = newNode);
+    } 
 }
