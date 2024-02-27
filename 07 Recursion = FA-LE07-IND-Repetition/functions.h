@@ -5,8 +5,8 @@ void powerMenu();
 void factorialMenu();
 void fibonnaciMenu();
 
-int powerLoop(int b, int e);
-int powerCall(int b, int e);
+long int powerLoop(long int b, int e);
+long int powerCall(long int b, int e);
 
 int factorialLoop(int n);
 int factorialCall(int n);
