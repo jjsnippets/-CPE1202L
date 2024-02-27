@@ -20,7 +20,9 @@ void main (){
         printf("[1] Power\n");
         printf("[2] Factorial\n");
         printf("[3] Fibonacci\n");
+        printf("[4] Exit\n");
 
+        fflush(stdin);
         userInput = getche();
         printf("\n\n");
 
@@ -40,9 +42,4 @@ void main (){
         }
 
     } while (userInput != '4');
-
-
-
-
-
 }
