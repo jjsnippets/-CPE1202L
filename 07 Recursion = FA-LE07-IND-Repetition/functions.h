@@ -8,8 +8,8 @@ void fibonnaciMenu();
 long int powerLoop(long int b, int e);
 long int powerCall(long int b, int e);
 
-int factorialLoop(int n);
-int factorialCall(int n);
+long int factorialLoop(long int n);
+long int factorialCall(long int n);
 
 int fibonnaciLoop(int a);
 int fibonnaciCall(int a);
