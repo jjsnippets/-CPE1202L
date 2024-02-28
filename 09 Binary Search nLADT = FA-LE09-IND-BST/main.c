@@ -25,11 +25,14 @@ void main(){
     int count = 0;
 
     // [6, 2, 11, 7, 3, 12, 8, 4]
-    // for (int i = 0; i < 8; i++){
-    //     printf("[%d %d] ", i, ((i+5)*295) % 13);
-    // }
+    for (int i = 0; i < 8; i++){
+        // printf("[%d %d] ", i, ((i+5)*295) % 13);
+        addNode(&root, ((i+5)*295) % 13, &count);
+    }
 
-    addNode(&root, 6, &count);
+    // addNode(&root, 6, &count);
+    // addNode(&root, 2, &count);
+    // addNode(&root, 11, &count);
 
     displayNode(root);
 
@@ -53,6 +56,8 @@ void displayNode(NODE* toShow){
 
 void addNode(NODE** root, int data, int* count){
 
+    printf("{%d: %d}", *count+1, data);
+
     NODE* newNode = calloc(1, sizeof(NODE));
     newNode->x = data;
 
@@ -61,12 +66,22 @@ void addNode(NODE** root, int data, int* count){
         return;
     }
 
-    // NODE* currentNode = *root;
+    NODE* currentNode = *root;
 
-    // if (currentNode->x < data)
+    while (1){
+        if (data < currentNode->x){
+            if (!(currentNode->left)){
+                currentNode->left = newNode;
+                break;
+            } else
+                currentNode = currentNode->left;
 
-    
-
-
-
+        } else {
+            if (!(currentNode->right)){
+                currentNode->right = newNode;
+                break;
+            } else
+                currentNode = currentNode->right;
+        }
+    }
 }
