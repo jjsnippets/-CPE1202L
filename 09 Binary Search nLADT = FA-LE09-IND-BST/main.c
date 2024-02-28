@@ -15,6 +15,10 @@ typedef struct queue {
 } QUEUE;
 
 void displayNode(NODE* toShow);
+void displayAll(NODE* root, int count);
+
+void enqueue(QUEUE** head, NODE* toAdd);
+NODE* dequeue(QUEUE** head);
 
 void addNode(NODE** root, int data, int* count);
 
@@ -24,17 +28,19 @@ void main(){
     NODE* root = calloc(1, sizeof(NODE));
     int count = 0;
 
-    // [6, 2, 11, 7, 3, 12, 8, 4]
-    for (int i = 0; i < 8; i++){
-        // printf("[%d %d] ", i, ((i+5)*295) % 13);
-        addNode(&root, ((i+5)*295) % 13, &count);
+    // [10, 6, 2, 21, 17, 13, 9, 5, 1, 20, 16]
+    for (int i = 0; i < 11; i++){
+        // printf("[%d %d] ", i, ((i+10)*295) % 23);
+        addNode(&root, ((i+9)*295) % 23, &count);
     }
 
     // addNode(&root, 6, &count);
     // addNode(&root, 2, &count);
     // addNode(&root, 11, &count);
 
-    displayNode(root);
+    displayAll(root, count);
+
+    // removeNode(&root, 21, &count);
 
 }
 
@@ -51,6 +57,53 @@ void displayNode(NODE* toShow){
         printf("\tRight child: %d\n", toShow->right->x);
 
     printf("\n");
+
+}
+
+void displayAll(NODE* root, int count){
+
+    if (!count) return;
+
+    QUEUE* bft = calloc(1, sizeof(QUEUE));
+    enqueue(&bft, root);
+    printf("\n*%d*", bft);
+
+    while (bft){
+
+        NODE* display = dequeue(&bft);
+        displayNode(display);
+
+        if (display->left) enqueue(&bft, display->left);
+        if (display->right) enqueue(&bft, display->right);
+
+    }
+}
+
+void enqueue(QUEUE** head, NODE* toAdd){
+
+    if (!(*head)->data){
+        (*head)->data = toAdd;
+        return;
+    }
+
+    QUEUE* lastQueue = *head;
+    QUEUE* insert = calloc(1, sizeof(QUEUE));
+    insert->data = toAdd;
+
+    while (lastQueue->next) lastQueue = lastQueue->next;
+    lastQueue->next = insert;
+
+}
+
+NODE* dequeue(QUEUE** head){
+
+    NODE* result = calloc(1, sizeof(NODE));
+    result = (*head)->data;
+
+    QUEUE* newHead = ((*head)->next) ? (*head)->next : calloc(1, sizeof(NODE));
+
+    *head = newHead;
+    return result;
 
 }
 
@@ -85,3 +138,4 @@ void addNode(NODE** root, int data, int* count){
         }
     }
 }
+
