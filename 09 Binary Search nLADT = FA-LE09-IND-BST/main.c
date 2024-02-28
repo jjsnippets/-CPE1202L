@@ -21,6 +21,7 @@ void enqueue(QUEUE** head, NODE* toAdd);
 NODE* dequeue(QUEUE** head);
 
 void addNode(NODE** root, int data, int* count);
+void deleteNode(NODE** root, int data, int* count);
 
 
 void main(){
@@ -40,7 +41,11 @@ void main(){
 
     displayAll(root, count);
 
-    // removeNode(&root, 21, &count);
+    printf("===\n");
+
+    deleteNode(&root, 17, &count);
+
+    printf("=CODE RAN WITHOUT CRASHING=\n\n");
 
 }
 
@@ -63,19 +68,25 @@ void displayNode(NODE* toShow){
 void displayAll(NODE* root, int count){
 
     if (!count) return;
+    int inLine = 1;
 
     QUEUE* bft = calloc(1, sizeof(QUEUE));
     enqueue(&bft, root);
-    printf("\n*%d*", bft);
 
-    while (bft){
+    while (inLine){
 
         NODE* display = dequeue(&bft);
         displayNode(display);
+        inLine--;
 
-        if (display->left) enqueue(&bft, display->left);
-        if (display->right) enqueue(&bft, display->right);
-
+        if (display->left){
+            enqueue(&bft, display->left);
+            inLine++;
+        }
+        if (display->right){
+            enqueue(&bft, display->right);
+            inLine++;
+        }
     }
 }
 
@@ -139,3 +150,81 @@ void addNode(NODE** root, int data, int* count){
     }
 }
 
+void deleteNode(NODE** root, int data, int* count){
+
+    printf("CALLED FUNCTION\n");
+
+    NODE* toDelete = calloc(1, sizeof(NODE));
+    NODE* parentDelete;
+    
+    // if ((*root)->x = data){
+
+    // } else {
+
+        toDelete = *root;
+
+        while(1){
+            printf("<%d %d>", data, toDelete->x);
+
+            if (data == toDelete->x){
+                break;
+            }
+
+            if (data < toDelete->x){
+                if (toDelete->left) {
+                    printf("went left\n");
+                    parentDelete = toDelete;
+                    toDelete = toDelete->left;
+                    continue;
+                } else {
+                    printf("end of left\n");
+                    parentDelete = NULL;
+                    toDelete = NULL;
+                    break;
+                }
+            } else if (data > toDelete->x){
+                if (toDelete->right) {
+                    printf("went right\n");
+                    parentDelete = toDelete;
+                    toDelete = toDelete->right;
+                    continue;
+                } else {
+                    printf("end of right\n");
+                    parentDelete = NULL;
+                    toDelete = NULL;
+                    break;
+                }
+            }
+        }
+
+        if (!toDelete) {
+            return;
+
+        } else {
+            displayNode(parentDelete);
+            displayNode(toDelete);
+
+            NODE* reconnectNode = toDelete;
+
+            if (toDelete->right){
+                reconnectNode = toDelete->right;
+                while (reconnectNode->left) reconnectNode = reconnectNode->left;
+                // ENDED HERE
+
+            }
+
+
+
+        }
+            
+
+        
+
+
+
+    // }
+
+
+
+
+}
