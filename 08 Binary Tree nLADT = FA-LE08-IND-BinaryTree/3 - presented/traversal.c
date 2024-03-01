@@ -95,7 +95,15 @@ void treeMode(NODE* root){
 
     int maxDepth = treeDepth(root, 1);
 
+    int startDepth = 0;
+    NODE* leftDepth = root;
+    while (leftDepth){
+        leftDepth = leftDepth->left;
+        startDepth++;
+    }
+
     for (int i = 0; i < maxDepth; i++) printf("\n");
+    MOVE_UP(startDepth);
     treeDisplay(root, 1);
     MOVE_DOWN(maxDepth);
     printf("\n");
