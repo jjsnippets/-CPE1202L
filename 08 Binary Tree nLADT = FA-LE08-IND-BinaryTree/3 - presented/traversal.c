@@ -12,6 +12,7 @@
 
 #define MOVE_UP(x) printf("\e[%dA", x)
 #define MOVE_DOWN(x) printf("\e[%dB", x)
+#define MOVE_LEFT(x) printf("\e[%dD", x)
 
 void traversalMenu(NODE** root, int* count){
 
@@ -129,6 +130,7 @@ void treeDisplay(NODE* root, int depth){
     MOVE_DOWN(depth);
     printf("[%3d]", root->x, depth);
     MOVE_UP(depth);
+    MOVE_LEFT(1);
     treeDisplay(root->right, depth + 1);
 
 }
