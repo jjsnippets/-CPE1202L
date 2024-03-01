@@ -12,11 +12,11 @@
 
 void main(){
 
-    NODE* root = calloc(1, sizeof(NODE));
+    NODE* root = NULL;
     int count = 0;
     char userInput;
 
-    for (int i = 1; i < 9; i++)
+    for (int i = 1; i < 20; i++)
         addNode(&root, i, &count);
 
     do{
@@ -44,7 +44,7 @@ void main(){
                 break;
 
             case '3':
-                // traversalMenu(&root, &count);
+                traversalMenu(&root, &count);
                 break;
         }
     } while (userInput != '4');
