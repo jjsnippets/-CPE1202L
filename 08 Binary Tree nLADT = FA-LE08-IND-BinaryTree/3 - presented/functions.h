@@ -21,7 +21,7 @@
     void addNode(NODE** root, int data, int* size);
     int deleteNode(NODE** root, int data, int* size);
 
-    NODE* postOrderSearch(NODE* tree, int find);
+    NODE* searchNode(NODE* tree, int find);
 
     void addMenu(NODE** root, int* count);
     void deleteMenu(NODE** root, int* count);
