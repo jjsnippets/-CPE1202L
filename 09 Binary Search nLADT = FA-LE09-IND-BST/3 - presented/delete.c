@@ -114,7 +114,9 @@ int deleteNode(NODE** root, int data){
     printf("Which to keep [1/2]?\n");
     userInput = getche();
     printf("\n\n");
-    *root = (userInput == '1') ? methodOne : methodTwo; 
+    freeTree(*root);
+    *root = (userInput == '1') ? methodOne : methodTwo;
+    freeTree((userInput == '1') ? methodTwo : methodOne);
     return 1;
 }
 
@@ -156,4 +158,18 @@ NODE* treeCopy(NODE* root){
 
     return result;
 
+}
+
+void freeTree(NODE* root){
+    if (!root) return;
+
+    QUEUE* line = NULL;
+    enqueue(&line, root);
+
+    while (line){
+        NODE* toFree = dequeue(&line);
+        if (toFree->left) enqueue(&line, toFree->left);
+        if (toFree->right) enqueue(&line, toFree->right);
+        free(toFree);
+    }
 }

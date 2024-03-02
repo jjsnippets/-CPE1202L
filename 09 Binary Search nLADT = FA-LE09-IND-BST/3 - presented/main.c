@@ -46,6 +46,7 @@ void main(){
                 break;
         }
     } while (userInput != '4');
+    freeTree(root);
 }
 
 void displayNode(NODE* toShow){

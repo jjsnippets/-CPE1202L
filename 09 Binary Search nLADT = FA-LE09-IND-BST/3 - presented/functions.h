@@ -24,6 +24,7 @@
 
     NODE* searchParent(NODE* tree, int find);
     NODE* treeCopy(NODE* root);
+    void freeTree(NODE* root);
 
     void traversalMenu(NODE** root);
     void breadthFirst(NODE** root);
