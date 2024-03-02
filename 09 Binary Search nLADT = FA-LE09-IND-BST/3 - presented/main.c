@@ -25,9 +25,15 @@ void main(){
     // addNode(&root, 2, &count);
     // addNode(&root, 11, &count);
 
+    displayNode(root);
+    
+    printf("===\n");
+
     displayAll(root);
 
     printf("===\n");
+
+    traversalMenu(&root);
 
     // deleteNode(&root, 17, &count);
 
@@ -37,8 +43,10 @@ void main(){
 
 void displayNode(NODE* toShow){
 
+    if (!toShow) return;
+
     // debug
-    printf("[%d %ld %ld %ld]\n", toShow->x, toShow, toShow->left, toShow->right);
+    printf("[%ld:%d %ld:%d %ld:%d]\n", toShow, toShow->x, toShow->left, (toShow->left) ? toShow->left->x : -999, toShow->right, (toShow->right) ? toShow->right->x : -999);
 
     printf("Parent: %d\n", toShow->x);
 
@@ -54,24 +62,16 @@ void displayNode(NODE* toShow){
 void displayAll(NODE* root){
 
     if (!root) return;
-    int inLine = 1;
 
-    QUEUE* bft = calloc(1, sizeof(QUEUE));
+    QUEUE* bft = NULL;
     enqueue(&bft, root);
 
-    while (inLine){
+    while (bft){
 
         NODE* display = dequeue(&bft);
         displayNode(display);
-        inLine--;
 
-        if (display->left){
-            enqueue(&bft, display->left);
-            inLine++;
-        }
-        if (display->right){
-            enqueue(&bft, display->right);
-            inLine++;
-        }
+        if (display->left) enqueue(&bft, display->left);
+        if (display->right)enqueue(&bft, display->right);
     }
 }
