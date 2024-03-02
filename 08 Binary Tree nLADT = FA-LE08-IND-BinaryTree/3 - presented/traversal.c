@@ -22,6 +22,7 @@ void traversalMenu(NODE** root, int* count){
 
     printf("Breadth-first: ");
     breadthFirst(root);
+    printf("\n");
 
     printf("Depth-first Inorder Traversal: ");
     inOrder(*root, 1);
@@ -45,63 +46,51 @@ void traversalMenu(NODE** root, int* count){
 void breadthFirst(NODE** root){
     if (!*root) return;
 
-    QUEUE* bft = calloc(1, sizeof(QUEUE));
+    QUEUE* bft = NULL;
     NODE* toPrint = NULL;
     enqueue(&bft, *root);
 
-    while (bft->current){
+    while (bft){
 
         toPrint = dequeue(&bft);
         if (toPrint->left) enqueue(&bft, toPrint->left);
         if (toPrint->right) enqueue(&bft, toPrint->right);
-
         printf("%d ", toPrint->x);
-
     }
-        printf("\n");
-
 }
 
 void inOrder(NODE* root, int depth){
-
     if (!root) return;
 
     inOrder(root->left, depth + 1);
     printf("%d ", root->x);
     inOrder(root->right, depth + 1);
-
 }
 
 void preOrder(NODE* root, int depth){
-
     if (!root) return;
 
     printf("%d ", root->x);
     preOrder(root->left, depth + 1);
     preOrder(root->right, depth + 1);
-
 }
 
 void postOrder(NODE* root, int depth){
-
     if (!root) return;
 
     postOrder(root->left, depth + 1);
     postOrder(root->right, depth + 1);
     printf("%d ", root->x);
-
 }
 
 void treeMode(NODE* root){
+    if (!root) return;
 
     int maxDepth = treeDepth(root, 1);
 
-    int startDepth = 0;
+    int startDepth = 1;
     NODE* leftDepth = root;
-    while (leftDepth){
-        leftDepth = leftDepth->left;
-        startDepth++;
-    }
+    while (leftDepth = leftDepth->left) startDepth++;
 
     for (int i = 0; i < maxDepth; i++) printf("\n");
     MOVE_UP(startDepth);
@@ -112,18 +101,15 @@ void treeMode(NODE* root){
 }
 
 int treeDepth(NODE* root, int depth){
-
     if (!root) return depth - 1;
 
     int dLeft = treeDepth(root->left, depth + 1);
     int dRight = treeDepth(root->right, depth + 1);
 
     return (dLeft > dRight) ? dLeft : dRight;
-
 }
 
 void treeDisplay(NODE* root, int depth){
-
     if (!root) return;
 
     treeDisplay(root->left, depth + 1);
@@ -132,35 +118,30 @@ void treeDisplay(NODE* root, int depth){
     MOVE_UP(depth);
     MOVE_LEFT(1);
     treeDisplay(root->right, depth + 1);
-
 }
-
-
 
 void enqueue(QUEUE** head, NODE* toAdd){
 
-    if (!(*head)->current){
-        (*head)->current = toAdd;
+    if (!*head){
+        *head = calloc(1, sizeof(QUEUE));
+        (*head)->data = toAdd;
         return;
     }
 
     QUEUE* lastQueue = *head;
     QUEUE* insertEnd = calloc(1, sizeof(QUEUE));
-    insertEnd->current = toAdd;
+    insertEnd->data = toAdd;
 
-    while (lastQueue->next)
-        lastQueue = lastQueue->next;
-
+    while (lastQueue->next) lastQueue = lastQueue->next;
     lastQueue->next = insertEnd;
-
 }
 
 NODE* dequeue(QUEUE** head){
 
     NODE* result = calloc(1, sizeof(NODE));
-    result = (*head)->current;
+    result = (*head)->data;
 
-    QUEUE* newHead = (*head)->next ? (*head)->next : calloc(1, sizeof(QUEUE));
+    QUEUE* newHead = (*head)->next ? (*head)->next : NULL;
 
     (*head) = newHead;
     return result;

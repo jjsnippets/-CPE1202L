@@ -22,7 +22,9 @@ void addMenu(NODE** root, int* count){
     printf("\n");
 
     addNode(root, newValue, count);
-    displayAll(*root, *count);
+    printf("Tree display: ");
+    treeMode(*root);
+    printf("\n");
 
     COLOR_GREEN;
     printf("Success!\n");
@@ -31,9 +33,6 @@ void addMenu(NODE** root, int* count){
     printf("Press any key to continue\n");
     getche();
 }
-
-
-
 
 void addNode(NODE** root, int data, int* size){
 
@@ -51,18 +50,9 @@ void addNode(NODE** root, int data, int* size){
 
     NODE* currentNode = *root;
 
-    for (; movement > 1; movement >>= 1){
+    for (; movement > 1; movement >>= 1)
+        currentNode = (*size & movement) ? currentNode->right : currentNode->left;
 
-        if (*size & movement){
-            (currentNode = currentNode->right);
-        } else {
-            (currentNode = currentNode->left);
-        }
-    }
-
-    if (*size % 2){
-            (currentNode->right = newNode);
-    } else {
-            (currentNode->left = newNode);
-    }
+    if (*size % 2) currentNode->right = newNode;
+    else currentNode->left = newNode;
 }
