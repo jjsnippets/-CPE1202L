@@ -14,35 +14,38 @@
 void main(){
 
     NODE* root = NULL;
+    char userInput;
 
     // [10, 6, 2, 21, 17, 13, 9, 5, 1, 20, 16]
-    for (int i = 0; i < 11; i++){
-        // printf("[%d %d] ", i, ((i+10)*295) % 23);
-        addNode(&root, ((i+9)*295) % 23);
-    }
+    for (int i = 0; i < 11; i++) addNode(&root, ((i+9)*295) % 23);
 
-    // addNode(&root, 6, &count);
-    // addNode(&root, 2, &count);
-    // addNode(&root, 11, &count);
+    do{
+        system("cls");
+        BOLD_TEXT;
+        printf("=== MAIN MENU ===\n");
+        TEXT_RESET;
+        printf("[1] Add new node\n");
+        printf("[2] Delete a node\n");
+        printf("[3] Traverse binary tree\n");
+        printf("[4] Exit\n");
 
-    displayNode(root);
-    
-    printf("===\n");
+        userInput = getche();
+        printf("\n\n");
 
-    displayAll(root);
+        switch (userInput) {
+            case '1':
+                addMenu(&root);
+                break;
 
-    printf("===\n");
+            case '2':
+                deleteMenu(&root);
+                break;
 
-    traversalMenu(&root);
-
-    printf("===\n");
-
-    deleteNode(&root, 6);
-
-    // deleteNode(&root, 17, &count);
-
-    printf("\n\n=CODE RAN WITHOUT CRASHING=\n\n");
-
+            case '3':
+                traversalMenu(&root);
+                break;
+        }
+    } while (userInput != '4');
 }
 
 void displayNode(NODE* toShow){

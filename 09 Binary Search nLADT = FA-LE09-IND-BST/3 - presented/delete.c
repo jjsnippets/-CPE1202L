@@ -10,15 +10,43 @@
 #define COLOR_BLUE printf("\e[94m")
 #define TEXT_RESET printf("\e[m")
 
+void deleteMenu(NODE** root){
+
+    int delValue, isDeleted;
+
+    COLOR_BLUE;
+    printf("=== DELETE A NODE ===\n");
+    TEXT_RESET;
+    printf("value to delete: ");
+    scanf(" %d", &delValue);
+    printf("\n");
+
+    isDeleted = deleteNode(root, delValue);
+    printf("Tree display: ");
+    treeMode(*root);
+    printf("\n");
+
+    if (isDeleted){
+        COLOR_GREEN;
+        printf("Success!\n");
+        TEXT_RESET;
+        printf("Node removed\n");
+    } else {
+        COLOR_RED;
+        printf("FAILED!\n");
+        TEXT_RESET;
+        printf("Data not found in tree\n");
+    }
+
+    printf("Press any key to continue\n");
+    getche();
+}
+
 int deleteNode(NODE** root, int data){
+    if (!*root) return 0;
+    if (!searchNode(*root, data)) return 0;
 
     char userInput;
-
-    if (!*root) return 0;
-
-    printf("CALLED FUNCTION\n");
-
-    if (!searchNode(*root, data)) return 0;
 
     NODE* methodOne = treeCopy(*root);
     NODE* methodTwo = treeCopy(*root);
@@ -35,8 +63,11 @@ int deleteNode(NODE** root, int data){
         NODE* leftOf = deleteOne->left;
         NODE* rightOf = deleteOne->right;
 
-        NODE* parentOf = searchParent(methodOne, data);
-        NODE** dataTo = (parentOf->left == deleteOne) ? &(parentOf->left) : &(parentOf->right); 
+        // if (methodOne->x != data) displayNode(searchParent(methodOne, data));
+        NODE* parentOf = (methodOne->x == data) ? NULL : searchParent(methodOne, data);
+        NODE** dataTo = NULL;
+        if (methodOne->x == data) dataTo = &methodOne;
+        else dataTo = (parentOf->left == deleteOne) ? &(parentOf->left) : &(parentOf->right);
 
         NODE* rightmost = leftOf;
         if (rightmost){
@@ -45,7 +76,9 @@ int deleteNode(NODE** root, int data){
                 *dataTo = leftOf;
                 rightmost->right = rightOf;
 
-        } else *dataTo = rightOf;
+        }
+        else if (rightOf) *dataTo = rightOf;
+        else *dataTo = NULL;
         free(deleteOne);
 
         // method 2: copy right to toDelete, move left to bottom
@@ -53,8 +86,9 @@ int deleteNode(NODE** root, int data){
         leftOf = deleteTwo->left;
         rightOf = deleteTwo->right;
 
-        parentOf = searchParent(methodTwo, data);
-        dataTo = (parentOf->left == deleteTwo) ? &(parentOf->left) : &(parentOf->right); 
+        parentOf = (methodTwo->x == data) ? NULL : searchParent(methodTwo, data);
+        if (methodTwo->x == data) dataTo = &methodTwo;
+        else dataTo = (parentOf->left == deleteTwo) ? &(parentOf->left) : &(parentOf->right); 
 
         NODE* leftmost = rightOf;
         if (leftmost){
@@ -63,7 +97,9 @@ int deleteNode(NODE** root, int data){
                 *dataTo = rightOf;
                 leftmost->left = leftOf;
 
-        } else *dataTo = leftOf;
+        }
+        else if (leftOf) *dataTo = leftOf;
+        else *dataTo = NULL;
         free(deleteTwo);
     }
 
@@ -94,7 +130,8 @@ NODE* searchNode(NODE* tree, int find){
 NODE* searchParent(NODE* tree, int find){
 
     if (!tree) return NULL;
-    if ((tree->left->x == find) || (tree->right->x == find)) return tree;
+    if (tree->left) if (tree->left->x == find) return tree;
+    if (tree->right) if (tree->right->x == find) return tree;
 
     return searchParent((find < tree->x) ? tree->left : tree->right, find);
 

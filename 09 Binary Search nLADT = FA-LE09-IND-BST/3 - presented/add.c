@@ -10,6 +10,30 @@
 #define COLOR_BLUE printf("\e[94m")
 #define TEXT_RESET printf("\e[m")
 
+void addMenu(NODE** root){
+
+    int newValue;
+
+    COLOR_BLUE;
+    printf("=== ADD NEW NODE ===\n");
+    TEXT_RESET;
+    printf("Insert value to add: ");
+    scanf(" %d", &newValue);
+    printf("\n");
+
+    addNode(root, newValue);
+    printf("Tree display: ");
+    treeMode(*root);
+    printf("\n");
+
+    COLOR_GREEN;
+    printf("Success!\n");
+    TEXT_RESET;
+    printf("Node added\n");
+    printf("Press any key to continue\n");
+    getche();
+}
+
 void addNode(NODE** root, int data){
 
     if (!*root){
