@@ -22,6 +22,9 @@
     int deleteNode(NODE** root, int data);
     NODE* searchNode(NODE* tree, int find);
 
+    NODE* searchParent(NODE* tree, int find);
+    NODE* treeCopy(NODE* root);
+
     void traversalMenu(NODE** root);
     void breadthFirst(NODE** root);
     void inOrder(NODE* root, int depth);
