@@ -15,11 +15,12 @@
     void displayNode(NODE* toShow);
     void displayAll(NODE* root);
 
-    void addNode(NODE** root, int data);
-    void deleteNode(NODE** root, int data, int* count);
-
     void addMenu(NODE** root);
-    void deleteMenu(NODE** root, int* count);
+    void addNode(NODE** root, int data);
+
+    void deleteMenu(NODE** root);
+    int deleteNode(NODE** root, int data);
+    NODE* searchNode(NODE* tree, int find);
 
     void traversalMenu(NODE** root);
     void breadthFirst(NODE** root);

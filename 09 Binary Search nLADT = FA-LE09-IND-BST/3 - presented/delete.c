@@ -10,81 +10,62 @@
 #define COLOR_BLUE printf("\e[94m")
 #define TEXT_RESET printf("\e[m")
 
-void deleteNode(NODE** root, int data, int* count){
+NODE* treeCopy(NODE* root){
+    if (!root) return NULL;
+
+    QUEUE* line = NULL;
+    NODE* result = NULL;
+    enqueue(&line, root);
+
+    while (line){
+
+        NODE* current = dequeue(&line);
+        addNode(&result, current->x);
+        
+        if (current->left) enqueue(&line, current->left);
+        if (current->right) enqueue(&line, current->right);
+
+    }
+
+    return result;
+
+}
+
+int deleteNode(NODE** root, int data){
+
+    if (!*root) return 0;
 
     printf("CALLED FUNCTION\n");
 
-    NODE* toDelete = calloc(1, sizeof(NODE));
-    NODE* parentDelete;
+    NODE* toDelete = searchNode(*root, data);
+    if (!toDelete) return 0;
 
-    // if ((*root)->x = data){
+    NODE* methodOne = treeCopy(*root);
+    NODE* methodTwo = treeCopy(*root);
 
-    // } else {
-
-        toDelete = *root;
-
-        while(1){
-            printf("<%d %d>", data, toDelete->x);
-
-            if (data == toDelete->x){
-                break;
-            }
-
-            if (data < toDelete->x){
-                if (toDelete->left) {
-                    printf("went left\n");
-                    parentDelete = toDelete;
-                    toDelete = toDelete->left;
-                    continue;
-                } else {
-                    printf("end of left\n");
-                    parentDelete = NULL;
-                    toDelete = NULL;
-                    break;
-                }
-            } else if (data > toDelete->x){
-                if (toDelete->right) {
-                    printf("went right\n");
-                    parentDelete = toDelete;
-                    toDelete = toDelete->right;
-                    continue;
-                } else {
-                    printf("end of right\n");
-                    parentDelete = NULL;
-                    toDelete = NULL;
-                    break;
-                }
-            }
-        }
-
-        if (!toDelete) {
-            return;
-
-        } else {
-            displayNode(parentDelete);
-            displayNode(toDelete);
-
-            NODE* reconnectNode = toDelete;
-
-            if (toDelete->right){
-                reconnectNode = toDelete->right;
-                while (reconnectNode->left) reconnectNode = reconnectNode->left;
-                // ENDED HERE
-
-            }
+    // method 1
+    
 
 
 
-        }
+
+    // method 2
 
 
 
 
 
 
-    // }
 
 
 
+}
+
+NODE* searchNode(NODE* tree, int find){
+
+    if (!tree) return NULL;
+    if (tree->x == find) return tree;
+
+    return searchNode((find < tree->x) ? tree->left : tree->right, find);
 
 }

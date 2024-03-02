@@ -35,9 +35,13 @@ void main(){
 
     traversalMenu(&root);
 
+    printf("===\n");
+
+    deleteNode(&root, 6);
+
     // deleteNode(&root, 17, &count);
 
-    printf("=CODE RAN WITHOUT CRASHING=\n\n");
+    printf("\n\n=CODE RAN WITHOUT CRASHING=\n\n");
 
 }
 
