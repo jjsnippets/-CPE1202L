@@ -13,24 +13,23 @@
 
 void main(){
 
-    NODE* root = calloc(1, sizeof(NODE));
-    int count = 0;
+    NODE* root = NULL;
 
     // [10, 6, 2, 21, 17, 13, 9, 5, 1, 20, 16]
     for (int i = 0; i < 11; i++){
         // printf("[%d %d] ", i, ((i+10)*295) % 23);
-        addNode(&root, ((i+9)*295) % 23, &count);
+        addNode(&root, ((i+9)*295) % 23);
     }
 
     // addNode(&root, 6, &count);
     // addNode(&root, 2, &count);
     // addNode(&root, 11, &count);
 
-    displayAll(root, count);
+    displayAll(root);
 
     printf("===\n");
 
-    deleteNode(&root, 17, &count);
+    // deleteNode(&root, 17, &count);
 
     printf("=CODE RAN WITHOUT CRASHING=\n\n");
 
@@ -52,9 +51,9 @@ void displayNode(NODE* toShow){
 
 }
 
-void displayAll(NODE* root, int count){
+void displayAll(NODE* root){
 
-    if (!count) return;
+    if (!root) return;
     int inLine = 1;
 
     QUEUE* bft = calloc(1, sizeof(QUEUE));

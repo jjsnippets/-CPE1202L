@@ -13,15 +13,15 @@
     } QUEUE;
 
     void displayNode(NODE* toShow);
-    void displayAll(NODE* root, int count);
+    void displayAll(NODE* root);
 
     void enqueue(QUEUE** head, NODE* toAdd);
     NODE* dequeue(QUEUE** head);
 
-    void addNode(NODE** root, int data, int* count);
+    void addNode(NODE** root, int data);
     void deleteNode(NODE** root, int data, int* count);
 
-    void addMenu(NODE** root, int* count);
+    void addMenu(NODE** root);
     void deleteMenu(NODE** root, int* count);
     void traversalMenu(NODE** root, int* count);
 

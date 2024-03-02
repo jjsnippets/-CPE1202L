@@ -10,17 +10,16 @@
 #define COLOR_BLUE printf("\e[94m")
 #define TEXT_RESET printf("\e[m")
 
-void addNode(NODE** root, int data, int* count){
+void addNode(NODE** root, int data){
 
-    printf("{%d: %d}", *count+1, data);
+    if (!*root){
+        *root = calloc(1, sizeof(NODE));
+        (*root)->x = data;
+        return;
+    }
 
     NODE* newNode = calloc(1, sizeof(NODE));
     newNode->x = data;
-
-    if (!(*count)++){
-        *root = newNode;
-        return;
-    }
 
     NODE* currentNode = *root;
 
