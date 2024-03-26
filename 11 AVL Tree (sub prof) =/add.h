@@ -7,14 +7,7 @@
         struct node* right;
     } NODE;
 
-    
-    
-
-
-
-
-
-
-
+    void addMenu(NODE** root);
+    void addNode(NODE** root, int data);
 
 #endif
