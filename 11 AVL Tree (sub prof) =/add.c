@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <conio.h>
 #include "add.h"
+#include "display.h"
 #include "formatting.h"
 
 void addMenu(NODE** root){
@@ -18,7 +19,7 @@ void addMenu(NODE** root){
 
     addNode(root, newValue);
     printf("Tree display: ");
-    treeMode(*root);
+    treeDisplay(*root);
     printf("\n");
 
     COLOR_GREEN;
