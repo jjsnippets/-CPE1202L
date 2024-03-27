@@ -31,32 +31,22 @@ void addMenu(NODE** root){
 }
 
 void addNode(NODE** root, int data){
-
     if (!*root){
         *root = calloc(1, sizeof(NODE));
         (*root)->data = data;
-        return;
-    }
 
-    NODE* newNode = calloc(1, sizeof(NODE));
-    newNode->data = data;
+    } else {
+        NODE* newNode = calloc(1, sizeof(NODE));
+        newNode->data = data;
 
-    NODE* currentNode = *root;
+        NODE* currentNode = *root;
+        NODE** nextNode = (data < currentNode->data) ? &(currentNode->left) : &(currentNode->right);
 
-    while (1){
-        if (data < currentNode->data){
-            if (!(currentNode->left)){
-                currentNode->left = newNode;
-                break;
-            } else
-                currentNode = currentNode->left;
-
-        } else {
-            if (!(currentNode->right)){
-                currentNode->right = newNode;
-                break;
-            } else
-                currentNode = currentNode->right;
+        while(*nextNode){
+            currentNode = *nextNode;
+            nextNode = (data < currentNode->data) ? &(currentNode->left) : &(currentNode->right);
         }
+
+        *nextNode = newNode;
     }
 }
