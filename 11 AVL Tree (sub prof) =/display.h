@@ -12,10 +12,10 @@
     LIST* pop(LIST** root);
 
     void enqueue(LIST** root, NODE* toAdd);
-    LIST* dequeue(LIST** root);
+    NODE* dequeue(LIST** root);
 
 
-    void displayMenu(NODE* root);
+    void displayMenu(NODE** root);
 
     void breadthFirst(NODE** root);
     void inOrder(NODE* root, int depth);

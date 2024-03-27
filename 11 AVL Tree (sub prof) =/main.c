@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <conio.h>
+#include <windows.h>
 #include "add.h"
 #include "delete.h"
 #include "display.h"
@@ -27,7 +29,7 @@ int main(){
 
         switch (userInput) {
             case '1':
-                //addMenu(&root);
+                addMenu(&root);
                 break;
 
             case '2':
@@ -35,7 +37,7 @@ int main(){
                 break;
 
             case '3':
-                //displayMenu(&root);
+                displayMenu(&root);
                 break;
         }
     } while (userInput != '4');

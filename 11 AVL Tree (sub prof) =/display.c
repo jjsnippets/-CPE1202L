@@ -6,7 +6,7 @@
 #include "display.h"
 #include "formatting.h"
 
-void traversalMenu(NODE** root){
+void displayMenu(NODE** root){
 
     COLOR_BLUE;
     printf("=== TRAVERSE TREE ===\n");
@@ -29,7 +29,7 @@ void traversalMenu(NODE** root){
     printf("\n");
 
     printf("Tree display: ");
-    treeMode(*root);
+    treeDisplay(*root);
     printf("\n");
     printf("Press any key to continue\n");
     getche();
