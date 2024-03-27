@@ -15,12 +15,12 @@
     NODE* dequeue(LIST** root);
 
 
-    void displayMenu(NODE** root);
+    void displayMenu(NODE* root);
 
-    void breadthFirst(NODE** root);
-    void inOrder(NODE* root, int depth);
-    void preOrder(NODE* root, int depth);
-    void postOrder(NODE* root, int depth);
+    void breadthFirst(NODE* root);
+    void inOrder(NODE* root);
+    void preOrder(NODE* root);
+    void postOrder(NODE* root);
     void treeDisplay(NODE* root);
 
     void showLeaves(NODE* root, int depth);

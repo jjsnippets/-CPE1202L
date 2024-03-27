@@ -12,7 +12,7 @@ int main(){
     char userInput;
 
     // [10, 6, 2, 21, 17, 13, 9, 5, 1, 20, 16]
-    // for (int i = 0; i < 11; i++) addNode(&root, ((i+9)*295) % 23);
+    for (int i = 0; i < 11; i++) addNode(&root, ((i+9)*295) % 23);
 
     do{
         system("cls");
@@ -37,7 +37,7 @@ int main(){
                 break;
 
             case '3':
-                displayMenu(&root);
+                displayMenu(root);
                 break;
         }
     } while (userInput != '4');
