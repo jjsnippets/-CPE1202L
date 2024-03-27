@@ -6,6 +6,8 @@
 #include "display.h"
 #include "formatting.h"
 
+#include "zdebug.h"
+
 void displayMenu(NODE* root){
 
     COLOR_BLUE;
@@ -31,6 +33,9 @@ void displayMenu(NODE* root){
     printf("Tree display: ");
     treeDisplay(root);
     printf("\n");
+
+    balanceDisplay(root);
+
     printf("Press any key to continue\n");
     getche();
 }
