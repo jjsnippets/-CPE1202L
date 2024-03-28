@@ -15,6 +15,4 @@
     void addMenu(NODE** root);
     LIST* addNode(NODE** root, int data);
 
-    void balanceTree(NODE** root, LIST* traversed);
-
 #endif

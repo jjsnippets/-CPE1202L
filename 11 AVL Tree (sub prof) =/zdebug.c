@@ -31,3 +31,10 @@ void showBalance(NODE* root, int depth){
         showBalance(root->right, depth + 1);
     }
 }
+
+void printNode(NODE* toShow){
+    if(!toShow) return;
+
+    printf("[%d <%d>]\n", toShow->data, treeDepth(toShow->right, 1) - treeDepth(toShow->left, 1));
+
+}

@@ -4,6 +4,7 @@
 #include <conio.h>
 #include "add.h"
 #include "display.h"
+#include "balance.h"
 #include "formatting.h"
 
 void addMenu(NODE** root){
@@ -22,7 +23,7 @@ void addMenu(NODE** root){
     treeDisplay(*root);
     printf("\n");
 
-    balanceTree(root, checkBalance);
+    //balanceTree(root, checkBalance);
     printf("After balancing: ");
     treeDisplay(*root);
     printf("\n");
@@ -57,13 +58,22 @@ LIST* addNode(NODE** root, int data){
         }
 
         *nextNode = newNode;
+
+        while(traversed){
+            NODE* checkBalance = pop(&traversed);
+            NODE** temp = parentOf(root, checkBalance);
+            int balanceFactor = treeDepth(checkBalance->right, 1) - treeDepth(checkBalance->left, 1);
+
+            if (balanceFactor == 2){
+                *temp = rotateLeft(checkBalance, checkBalance->right);
+
+                break;
+
+            }
+        }
     }
 
+    treeDisplay(*root);
+
     return traversed;
-}
-
-void balanceTree(NODE** root, LIST* traversed){
-
-
-    
 }

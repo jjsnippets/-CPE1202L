@@ -5,5 +5,6 @@
 
     void balanceDisplay(NODE* root);
     void showBalance(NODE* root, int depth);
+    void printNode(NODE* toShow);
 
 #endif
