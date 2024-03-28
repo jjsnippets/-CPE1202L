@@ -12,8 +12,31 @@
 void balanceTree(NODE** root, LIST* checkNodes){
     if (checkNodes){
         while(checkNodes){
-            NODE* currentNode = pop(&checkNodes);
-            printNode(currentNode);
+            NODE* checkBalance = pop(&checkNodes);
+            NODE** currentNode = parentOf(root, checkBalance);
+            int currentBF = treeDepth(checkBalance->right, 1) - treeDepth(checkBalance->left, 1);
+
+            NODE* childOf;
+            int nextBF;
+
+            if (currentBF == 2){
+
+                childOf = checkBalance->right;
+                nextBF = treeDepth(childOf->right, 1) - treeDepth(childOf->left, 1);
+                
+                if (nextBF == -1) checkBalance->right = rotateRight(childOf, childOf->left);
+                *currentNode = rotateLeft(checkBalance, checkBalance->right);
+
+                break;
+            } else if (currentBF == -2){
+                childOf = checkBalance->left;
+                nextBF = treeDepth(childOf->right, 1) - treeDepth(childOf->left, 1);
+                
+                if (nextBF == 1) checkBalance->left = rotateLeft(childOf, childOf->right);
+                *currentNode = rotateRight(checkBalance, checkBalance->left);
+
+                break;
+            }
         }
     }
 }

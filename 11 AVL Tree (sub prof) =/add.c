@@ -23,7 +23,7 @@ void addMenu(NODE** root){
     treeDisplay(*root);
     printf("\n");
 
-    //balanceTree(root, checkBalance);
+    balanceTree(root, checkBalance);
     printf("After balancing: ");
     treeDisplay(*root);
     printf("\n");
@@ -58,34 +58,6 @@ LIST* addNode(NODE** root, int data){
         }
 
         *nextNode = newNode;
-
-        while(traversed){
-            NODE* checkBalance = pop(&traversed);
-            NODE** currentNode = parentOf(root, checkBalance);
-            int currentBF = treeDepth(checkBalance->right, 1) - treeDepth(checkBalance->left, 1);
-
-            NODE* childOf;
-            int nextBF;
-
-            if (currentBF == 2){
-
-                childOf = checkBalance->right;
-                nextBF = treeDepth(childOf->right, 1) - treeDepth(childOf->left, 1);
-                
-                if (nextBF == -1) checkBalance->right = rotateRight(childOf, childOf->left);
-                *currentNode = rotateLeft(checkBalance, checkBalance->right);
-
-                break;
-            } else if (currentBF == -2){
-                childOf = checkBalance->left;
-                nextBF = treeDepth(childOf->right, 1) - treeDepth(childOf->left, 1);
-                
-                if (nextBF == 1) checkBalance->left = rotateLeft(childOf, childOf->right);
-                *currentNode = rotateRight(checkBalance, checkBalance->left);
-
-                break;
-            }
-        }
     }
 
     return traversed;
