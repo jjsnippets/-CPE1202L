@@ -31,7 +31,7 @@ void displayMenu(NODE* root){
     printf("\n");
 
     printf("Tree display: ");
-    treeDisplay(root);
+    treeDisplay(root, -999);
     printf("\n");
 
     balanceDisplay(root);
@@ -79,13 +79,13 @@ void postOrder(NODE* root){
     }
 }
 
-void treeDisplay(NODE* root){
+void treeDisplay(NODE* root, int match){
     if (root){
         int maxDepth = treeDepth(root, 1);
 
         for (int i = 0; i < maxDepth; i++) printf("\n");
         MOVE_UP(maxDepth);
-        showLeaves(root, 1);
+        showLeaves(root, 1, match);
         MOVE_DOWN(maxDepth);
         printf("\n");
     }
@@ -106,14 +106,16 @@ int treeDepth(NODE* root, int depth){
     return result;
 }
 
-void showLeaves(NODE* root, int depth){
+void showLeaves(NODE* root, int depth, int match){
     if (root){
-        showLeaves(root->left, depth + 1);
+        showLeaves(root->left, depth + 1, match);
         MOVE_DOWN(depth);
+        if (root->data == match) COLOR_GREEN;
         printf("[%3d]", root->data, depth);
+        if (root->data == match) TEXT_RESET;
         MOVE_UP(depth);
         MOVE_LEFT(1);
-        showLeaves(root->right, depth + 1);
+        showLeaves(root->right, depth + 1, match);
     }
 }
 

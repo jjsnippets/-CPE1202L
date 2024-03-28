@@ -20,12 +20,12 @@ void addMenu(NODE** root){
 
     LIST* checkBalance = addNode(root, newValue);
     printf("Before balancing: ");
-    treeDisplay(*root);
+    treeDisplay(*root, newValue);
     printf("\n");
 
     balanceTree(root, checkBalance);
     printf("After balancing: ");
-    treeDisplay(*root);
+    treeDisplay(*root, newValue);
     printf("\n");
 
     COLOR_GREEN;

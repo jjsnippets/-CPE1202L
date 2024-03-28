@@ -16,9 +16,9 @@
     void inOrder(NODE* root);
     void preOrder(NODE* root);
     void postOrder(NODE* root);
-    void treeDisplay(NODE* root);
+    void treeDisplay(NODE* root, int match);
 
-    void showLeaves(NODE* root, int depth);
+    void showLeaves(NODE* root, int depth, int match);
     int treeDepth(NODE* root, int depth);
 
 #endif

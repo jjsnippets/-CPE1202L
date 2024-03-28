@@ -4,6 +4,7 @@
 #include "add.h"
 #include "delete.h"
 #include "display.h"
+#include "search.h"
 #include "formatting.h"
 
 int main(){
@@ -21,8 +22,9 @@ int main(){
         TEXT_RESET;
         printf("[1] Add new node\n");
         printf("[2] Delete a node\n");
-        printf("[3] Traverse binary tree\n");
-        printf("[4] Exit\n");
+        printf("[3] Search for a node\n");
+        printf("[4] Traverse binary tree\n");
+        printf("[5] Exit\n");
 
         userInput = getche();
         printf("\n\n");
@@ -37,10 +39,14 @@ int main(){
                 break;
 
             case '3':
+                searchMenu(root);
+                break;
+
+            case '4':
                 displayMenu(root);
                 break;
         }
-    } while (userInput != '4');
+    } while (userInput != '5');
 
 
 }

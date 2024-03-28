@@ -20,7 +20,7 @@ void deleteMenu(NODE** root){
 
     isDeleted = deleteNode(root, delValue);
     printf("Tree display: ");
-    treeDisplay(*root);
+    treeDisplay(*root, -999);
     printf("\n");
 
     if (isDeleted){
@@ -115,15 +115,6 @@ int deleteNode(NODE** root, int data){
     // *root = (userInput == '1') ? methodOne : methodTwo;
     // freeTree((userInput == '1') ? methodTwo : methodOne);
     // return 1;
-}
-
-NODE* searchNode(NODE* tree, int find){
-
-    if (!tree) return NULL;
-    if (tree->data == find) return tree;
-
-    return searchNode((find < tree->data) ? tree->left : tree->right, find);
-
 }
 
 NODE* searchParent(NODE* tree, int find){
