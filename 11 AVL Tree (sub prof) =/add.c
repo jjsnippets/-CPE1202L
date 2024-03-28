@@ -61,19 +61,32 @@ LIST* addNode(NODE** root, int data){
 
         while(traversed){
             NODE* checkBalance = pop(&traversed);
-            NODE** temp = parentOf(root, checkBalance);
-            int balanceFactor = treeDepth(checkBalance->right, 1) - treeDepth(checkBalance->left, 1);
+            NODE** currentNode = parentOf(root, checkBalance);
+            int currentBF = treeDepth(checkBalance->right, 1) - treeDepth(checkBalance->left, 1);
 
-            if (balanceFactor == 2){
-                *temp = rotateLeft(checkBalance, checkBalance->right);
+            NODE* childOf;
+            int nextBF;
+
+            if (currentBF == 2){
+
+                childOf = checkBalance->right;
+                nextBF = treeDepth(childOf->right, 1) - treeDepth(childOf->left, 1);
+                
+                if (nextBF == -1) checkBalance->right = rotateRight(childOf, childOf->left);
+                *currentNode = rotateLeft(checkBalance, checkBalance->right);
 
                 break;
+            } else if (currentBF == -2){
+                childOf = checkBalance->left;
+                nextBF = treeDepth(childOf->right, 1) - treeDepth(childOf->left, 1);
+                
+                if (nextBF == 1) checkBalance->left = rotateLeft(childOf, childOf->right);
+                *currentNode = rotateRight(checkBalance, checkBalance->left);
 
+                break;
             }
         }
     }
-
-    treeDisplay(*root);
 
     return traversed;
 }

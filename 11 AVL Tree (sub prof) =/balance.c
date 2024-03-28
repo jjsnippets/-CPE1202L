@@ -25,9 +25,12 @@ NODE* rotateLeft(NODE* A, NODE* B){
     return B;
 }
 
-
-
-NODE* rotateRight(NODE* A, NODE* B);
+NODE* rotateRight(NODE* A, NODE* B){
+    // NODE* innerTree = B->right;
+    A->left = B->right;
+    B->right = A;
+    return B;
+}
 
 NODE** parentOf(NODE** root, NODE* child){
 
@@ -37,5 +40,5 @@ NODE** parentOf(NODE** root, NODE* child){
         return parentOf(&((*root)->left), child);
     else
         return parentOf(&((*root)->right), child);
-        
+
 }
