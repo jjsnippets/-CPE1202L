@@ -143,3 +143,18 @@ NODE* dequeue(LIST** head){
     return result;
 
 }
+
+void push(LIST** root, NODE* toAdd){
+    LIST* newHead = calloc(1, sizeof(LIST));
+    newHead->node = toAdd;
+
+    if (*root) newHead->next = *root;
+
+    *root = newHead;
+}
+
+NODE* pop(LIST** root){
+    NODE* result = (*root)->node;
+    *root = (*root)->next;
+    return result;
+}

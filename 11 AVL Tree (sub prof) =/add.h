@@ -7,7 +7,14 @@
         struct node* right;
     } NODE;
 
+    typedef struct list{
+        NODE* node;
+        struct list* next;
+    } LIST;
+
     void addMenu(NODE** root);
-    void addNode(NODE** root, int data);
+    LIST* addNode(NODE** root, int data);
+
+    void balanceTree(NODE** root, LIST* traversed);
 
 #endif

@@ -17,8 +17,13 @@ void addMenu(NODE** root){
     scanf(" %d", &newValue);
     printf("\n");
 
-    addNode(root, newValue);
-    printf("Tree display: ");
+    LIST* checkBalance = addNode(root, newValue);
+    printf("Before balancing: ");
+    treeDisplay(*root);
+    printf("\n");
+
+    balanceTree(root, checkBalance);
+    printf("After balancing: ");
     treeDisplay(*root);
     printf("\n");
 
@@ -30,7 +35,9 @@ void addMenu(NODE** root){
     getche();
 }
 
-void addNode(NODE** root, int data){
+LIST* addNode(NODE** root, int data){
+    LIST* traversed = NULL;
+
     if (!*root){
         *root = calloc(1, sizeof(NODE));
         (*root)->data = data;
@@ -41,12 +48,22 @@ void addNode(NODE** root, int data){
 
         NODE* currentNode = *root;
         NODE** nextNode = (data < currentNode->data) ? &(currentNode->left) : &(currentNode->right);
+        push(&traversed, currentNode);
 
         while(*nextNode){
             currentNode = *nextNode;
             nextNode = (data < currentNode->data) ? &(currentNode->left) : &(currentNode->right);
+            push(&traversed, currentNode);
         }
 
         *nextNode = newNode;
     }
+
+    return traversed;
+}
+
+void balanceTree(NODE** root, LIST* traversed){
+
+
+    
 }

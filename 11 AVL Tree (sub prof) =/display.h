@@ -3,13 +3,8 @@
 #ifndef DISPLAY_H
     #define DISPLAY_H
 
-    typedef struct list{
-        NODE* node;
-        struct list* next;
-    } LIST;
-
     void push(LIST** root, NODE* toAdd);
-    LIST* pop(LIST** root);
+    NODE* pop(LIST** root);
 
     void enqueue(LIST** root, NODE* toAdd);
     NODE* dequeue(LIST** root);
