@@ -7,13 +7,18 @@
 #include "search.h"
 #include "formatting.h"
 
+#include "balance.h"
+
 int main(){
 
     NODE* root = NULL;
     char userInput;
 
     // [10, 6, 2, 21, 17, 13, 9, 5, 1, 20, 16]
-    // for (int i = 0; i < 11; i++) addNode(&root, ((i+9)*295) % 23);
+    // for (int i = 0; i < 11; i++) {
+    //     LIST* check = addNode(&root, ((i+9)*295) % 23);
+    //     balanceTree(&root, check);
+    // }
 
     do{
         system("cls");
@@ -35,7 +40,7 @@ int main(){
                 break;
 
             case '2':
-                //deleteMenu(&root);
+                deleteMenu(&root);
                 break;
 
             case '3':

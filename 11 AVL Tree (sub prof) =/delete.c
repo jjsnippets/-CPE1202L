@@ -20,7 +20,7 @@ void deleteMenu(NODE** root){
     scanf(" %d", &delValue);
     printf("\n");
 
-    NODE* isPresent = searchNode(root, delValue);
+    NODE* isPresent = searchNode(*root, delValue);
     printf("Tree display: ");
     treeDisplay(*root, delValue);
     printf("\n");
@@ -30,154 +30,72 @@ void deleteMenu(NODE** root){
         printf("FAILED!\n");
         TEXT_RESET;
         printf("Data not found in tree\n");
+        printf("\n");
+
     } else {
         COLOR_GREEN;
         printf("Success!\n");
         TEXT_RESET;
         printf("Node removed\n");
+        printf("\n");
 
+        LIST* checkBalance = deleteNode(root, delValue);
 
+        printf("Before balancing: ");
+        treeDisplay(*root, -999);
+        printf("\n");
+
+        balanceTree(root, checkBalance);
+        printf("After balancing: ");
+        treeDisplay(*root, -999);
+        printf("\n");
     }
 
-    // isDeleted = deleteNode(root, delValue);
-    // printf("Tree display: ");
-    // treeDisplay(*root, -999);
-    // printf("\n");
-
-    // if (isDeleted){
-    //     COLOR_GREEN;
-    //     printf("Success!\n");
-    //     TEXT_RESET;
-    //     printf("Node removed\n");
-    // } else {
-    //     COLOR_RED;
-    //     printf("FAILED!\n");
-    //     TEXT_RESET;
-    //     printf("Data not found in tree\n");
-    // }
-
-    // printf("Press any key to continue\n");
-    // getche();
+    printf("Press any key to continue\n");
+    getche();
 }
 
 LIST* deleteNode(NODE** root, int data){
 
     LIST* traversed = NULL;
-    NODE* currentNode = *root;
+    NODE* toDelete = *root;
 
-    while(currentNode->data != data){
-        push(&traversed, currentNode);
-        currentNode = (currentNode->data > data) ? currentNode->left : currentNode->right;
+    while(toDelete->data != data){
+        push(&traversed, toDelete);
+        toDelete = (toDelete->data > data) ? toDelete->left : toDelete->right;
     }
 
-    NODE** parentNode = parentOf(root, currentNode);
-    
-    NODE* toReplace = currentNode->right;
-    if(!toReplace){
-        while(toReplace->left) toReplace = toReplace->left;
-    }
+    NODE** parentNode = parentOf(root, toDelete);
+    NODE* toReplace = toDelete->right;
 
-    
-
-
-
-
-    // if (!*root) return 0;
-    // if (!searchNode(*root, data)) return 0;
-
-    // char userInput;
-
-    // NODE* methodOne = treeCopy(*root);
-    // NODE* methodTwo = treeCopy(*root);
-
-    // if (!((*root)->left || (*root)->right)){
-    //     free(methodOne);
-    //     methodOne = NULL;
-    //     free(methodTwo);
-    //     methodTwo = NULL;
-
-    // } else {
-    //     // method 1: copy left to toDelete, move right to bottom
-    //     NODE* deleteOne = searchNode(methodOne, data);
-    //     NODE* leftOf = deleteOne->left;
-    //     NODE* rightOf = deleteOne->right;
-
-    //     // if (methodOne->data != data) displayNode(searchParent(methodOne, data));
-    //     NODE* parentOf = (methodOne->data == data) ? NULL : searchParent(methodOne, data);
-    //     NODE** dataTo = NULL;
-    //     if (methodOne->data == data) dataTo = &methodOne;
-    //     else dataTo = (parentOf->left == deleteOne) ? &(parentOf->left) : &(parentOf->right);
-
-    //     NODE* rightmost = leftOf;
-    //     if (rightmost){
-    //         while (rightmost->right) rightmost = rightmost->right;
-
-    //             *dataTo = leftOf;
-    //             rightmost->right = rightOf;
-
-    //     }
-    //     else if (rightOf) *dataTo = rightOf;
-    //     else *dataTo = NULL;
-    //     free(deleteOne);
-
-    //     // method 2: copy right to toDelete, move left to bottom
-    //     NODE* deleteTwo = searchNode(methodTwo, data);
-    //     leftOf = deleteTwo->left;
-    //     rightOf = deleteTwo->right;
-
-    //     parentOf = (methodTwo->data == data) ? NULL : searchParent(methodTwo, data);
-    //     if (methodTwo->data == data) dataTo = &methodTwo;
-    //     else dataTo = (parentOf->left == deleteTwo) ? &(parentOf->left) : &(parentOf->right); 
-
-    //     NODE* leftmost = rightOf;
-    //     if (leftmost){
-    //         while (leftmost->left) leftmost = leftmost->left;
-
-    //             *dataTo = rightOf;
-    //             leftmost->left = leftOf;
-
-    //     }
-    //     else if (leftOf) *dataTo = leftOf;
-    //     else *dataTo = NULL;
-    //     free(deleteTwo);
-    // }
-
-    // printf("Method 1: ");
-    // treeMode(methodOne);
-    // printf("\n");
-
-    // printf("Method 2: ");
-    // treeMode(methodTwo);
-    // printf("\n");
-
-    // printf("Which to keep [1/2]?\n");
-    // userInput = getche();
-    // printf("\n\n");
-    // freeTree(*root);
-    // *root = (userInput == '1') ? methodOne : methodTwo;
-    // freeTree((userInput == '1') ? methodTwo : methodOne);
-    // return 1;
-}
-
-NODE* treeCopy(NODE* root){
-    if (!root) return NULL;
-
-    LIST* line = NULL;
-    NODE* result = NULL;
-    enqueue(&line, root);
-
-    while (line){
-
-        NODE* current = dequeue(&line);
-        addNode(&result, current->data);
+    if(toReplace){
+        while(toReplace->left)
+            toReplace = toReplace->left;
         
-        if (current->left) enqueue(&line, current->left);
-        if (current->right) enqueue(&line, current->right);
+        toReplace->left = toDelete->left;
 
+        NODE** prune = parentOf(root, toReplace);
+        *prune = NULL;
+
+        NODE* reconnect = toReplace;
+        while(reconnect->right)
+            reconnect = reconnect->right;
+    
+        reconnect->right = toDelete->right;
+
+        *parentNode = toReplace;
+
+    } else 
+        *parentNode = toDelete->left;
+
+    if(*parentNode){
+        push(&traversed, *parentNode);
+        if((*parentNode)->right) push(&traversed, (*parentNode)->right);
     }
 
-    return result;
+    
 
+    return traversed;
 }
 
 void freeTree(NODE* root){
