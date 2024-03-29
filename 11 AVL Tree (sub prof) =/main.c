@@ -1,25 +1,53 @@
+/*
+======================================================
+FILE        : main.c
+AUTHORS     : Sarcol, Joshua
+DESCRIPTION : main file, calls other functions
+COPYRIGHT   : 2024-03-31
+
+REVISION HISTORY
+Date                By              Description
+2024-03-26          sarcol          made file
+2024-03-28          sarcol          modified function calls
+
+======================================================
+*/
+
 #include <stdio.h>
 #include <conio.h>
 #include <windows.h>
 #include "add.h"
 #include "delete.h"
-#include "display.h"
 #include "search.h"
-#include "formatting.h"
+#include "traverse.h"
 
 #include "balance.h"
+#include "formatting.h"
 
+/*
+======================================================
+FUNCTION    : main
+DESCRIPTION : implementation of a AVL tree with add, remove, search, and traverse functions
+ARGUMENTS
+
+RETURNS
+    int - returns 0, indicates success
+
+======================================================
+*/
 int main(){
 
     NODE* root = NULL;
     char userInput;
 
+    // debugging values
     // [10, 6, 2, 21, 17, 13, 9, 5, 1, 20, 16]
     // for (int i = 0; i < 11; i++) {
     //     LIST* check = addNode(&root, ((i+9)*295) % 23);
     //     balanceTree(&root, check);
     // }
 
+    // main menu loop
     do{
         system("cls");
         BOLD_TEXT;
@@ -48,10 +76,8 @@ int main(){
                 break;
 
             case '4':
-                displayMenu(root);
+                traverseMenu(root);
                 break;
         }
     } while (userInput != '5');
-
-
 }

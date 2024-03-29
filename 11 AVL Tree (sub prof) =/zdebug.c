@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <conio.h>
 #include "add.h"
-#include "display.h"
+#include "traverse.h"
 #include "formatting.h"
 
 #include "zdebug.h"
