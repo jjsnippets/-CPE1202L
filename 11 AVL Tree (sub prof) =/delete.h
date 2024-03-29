@@ -4,8 +4,6 @@
     #define DELETE_H
 
     void deleteMenu(NODE** root);
-    int deleteNode(NODE** root, int data);
-
-    NODE* parentOf(NODE* root, int search);
+    LIST* deleteNode(NODE** root, int data);
 
 #endif

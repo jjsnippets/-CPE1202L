@@ -4,6 +4,8 @@
 #include <conio.h>
 #include "add.h"
 #include "display.h"
+#include "balance.h"
+#include "search.h"
 #include "delete.h"
 #include "formatting.h"
 
@@ -18,28 +20,68 @@ void deleteMenu(NODE** root){
     scanf(" %d", &delValue);
     printf("\n");
 
-    isDeleted = deleteNode(root, delValue);
+    NODE* isPresent = searchNode(root, delValue);
     printf("Tree display: ");
-    treeDisplay(*root, -999);
+    treeDisplay(*root, delValue);
     printf("\n");
 
-    if (isDeleted){
-        COLOR_GREEN;
-        printf("Success!\n");
-        TEXT_RESET;
-        printf("Node removed\n");
-    } else {
+    if (!isPresent){
         COLOR_RED;
         printf("FAILED!\n");
         TEXT_RESET;
         printf("Data not found in tree\n");
+    } else {
+        COLOR_GREEN;
+        printf("Success!\n");
+        TEXT_RESET;
+        printf("Node removed\n");
+
+
     }
 
-    printf("Press any key to continue\n");
-    getche();
+    // isDeleted = deleteNode(root, delValue);
+    // printf("Tree display: ");
+    // treeDisplay(*root, -999);
+    // printf("\n");
+
+    // if (isDeleted){
+    //     COLOR_GREEN;
+    //     printf("Success!\n");
+    //     TEXT_RESET;
+    //     printf("Node removed\n");
+    // } else {
+    //     COLOR_RED;
+    //     printf("FAILED!\n");
+    //     TEXT_RESET;
+    //     printf("Data not found in tree\n");
+    // }
+
+    // printf("Press any key to continue\n");
+    // getche();
 }
 
-int deleteNode(NODE** root, int data){
+LIST* deleteNode(NODE** root, int data){
+
+    LIST* traversed = NULL;
+    NODE* currentNode = *root;
+
+    while(currentNode->data != data){
+        push(&traversed, currentNode);
+        currentNode = (currentNode->data > data) ? currentNode->left : currentNode->right;
+    }
+
+    NODE** parentNode = parentOf(root, currentNode);
+    
+    NODE* toReplace = currentNode->right;
+    if(!toReplace){
+        while(toReplace->left) toReplace = toReplace->left;
+    }
+
+    
+
+
+
+
     // if (!*root) return 0;
     // if (!searchNode(*root, data)) return 0;
 
@@ -115,16 +157,6 @@ int deleteNode(NODE** root, int data){
     // *root = (userInput == '1') ? methodOne : methodTwo;
     // freeTree((userInput == '1') ? methodTwo : methodOne);
     // return 1;
-}
-
-NODE* searchParent(NODE* tree, int find){
-
-    if (!tree) return NULL;
-    if (tree->left) if (tree->left->data == find) return tree;
-    if (tree->right) if (tree->right->data == find) return tree;
-
-    return searchParent((find < tree->data) ? tree->left : tree->right, find);
-
 }
 
 NODE* treeCopy(NODE* root){
