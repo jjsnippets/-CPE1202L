@@ -108,10 +108,10 @@ LIST* deleteNode(NODE** root, int data){
         toDelete = (toDelete->data > data) ? toDelete->left : toDelete->right;
     }
 
-    // pointer that points to 'toDelete'; to be replaced later
+    // pointer that points to 'toDelete'
     NODE** parentNode = parentOf(root, toDelete);
     
-    // node that replaces position of 'toDelete' ('toReplace')
+    // value that replaces 'toDelete' ('toReplace')
     NODE* toReplace = toDelete->right;
 
     // when nodes right of 'toDelete' exist
@@ -119,24 +119,18 @@ LIST* deleteNode(NODE** root, int data){
         // determines leftmost node
         while(toReplace->left)
             toReplace = toReplace->left;
-        
-        // moves left-side child connection
-        toReplace->left = toDelete->left;
 
-        // update parent-child relationship
-        NODE** prune = parentOf(root, toReplace);
-        *prune = NULL;
+        // parent of replacement node
+        NODE** upperCon = parentOf(root, toReplace);
 
-        // determines right-side connection
-        NODE* reconnect = toReplace;
-        while(reconnect->right)
-            reconnect = reconnect->right;
-    
-        // moves right-side child connection
-        reconnect->right = toDelete->right;
+        // right subtree of replacement node
+        NODE* lowerCon = toReplace->right;
 
-        // replace 'toDelete'
-        *parentNode = toReplace;
+        // deletion of 'data'
+        (*parentNode)->data = toReplace->data;
+
+        // reconnecting right subtree to parent
+        *upperCon = lowerCon;
 
     // when there are no nodes to the right of 'toDelete'
     } else 
