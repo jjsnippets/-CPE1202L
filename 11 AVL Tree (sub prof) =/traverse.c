@@ -162,8 +162,8 @@ void treeDisplay(NODE* root, int match){
 
         // move to bottom of terminal
         MOVE_DOWN(maxDepth);
-        printf("\n");
     }
+    printf("\n");
 }
 
 /*
