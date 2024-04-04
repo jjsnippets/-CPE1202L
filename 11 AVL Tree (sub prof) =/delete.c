@@ -34,7 +34,7 @@ ARGUMENTS
 */
 void deleteMenu(NODE** root){
 
-    int delValue, isDeleted;
+    int delValue;
 
     // submenu
     COLOR_BLUE;
@@ -66,7 +66,7 @@ void deleteMenu(NODE** root){
         printf("Node removed\n");
         printf("\n");
 
-        // initial removal of node to tree
+        // initial removal of node from tree
         LIST* checkBalance = deleteNode(root, delValue);
         printf("Before balancing: ");
         treeDisplay(*root, -999);

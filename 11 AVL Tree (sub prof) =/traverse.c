@@ -203,6 +203,7 @@ DESCRIPTION : displays individual branches and leaves of a tree
               recursive implementation
 ARGUMENTS
     NODE* root - root of AVL tree
+    int depth - current depth of node; set to 1 when initially called
     int match - value of node to be highlighted; set to an arbitrary value if unspecified
 ======================================================
 */
@@ -211,7 +212,7 @@ void showLeaves(NODE* root, int depth, int match){
         showLeaves(root->left, depth + 1, match);
         MOVE_DOWN(depth);
         if (root->data == match) COLOR_PINK;
-        printf("[%3d]", root->data, depth);
+        printf("[%3d]", root->data);
         if (root->data == match) TEXT_RESET;
         MOVE_UP(depth);
         MOVE_LEFT(1);
