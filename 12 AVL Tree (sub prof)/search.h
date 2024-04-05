@@ -1,6 +1,6 @@
 /*
 ======================================================
-FILE        : balance.h
+FILE        : search.h
 AUTHORS     : Sarcol, Joshua
 DESCRIPTION : interface file for searching a node from a tree
 COPYRIGHT   : 2024-03-31
