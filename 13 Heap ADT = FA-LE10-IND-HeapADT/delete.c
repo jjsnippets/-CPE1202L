@@ -75,20 +75,16 @@ int deleteNode(NODE** root, int delValue, int* size){
     return 1;
 }
 
-NODE* searchNode(NODE* root, int x){
-    NODE* result;
+NODE* searchNode(NODE* tree, int find){
 
-    // when node is NULL
-    if (!root)
-        result = NULL;
-    
-    // when node is found
-    else if (root->data == x)
-        result = root;
+    if (!tree) return NULL;
+    if (tree->data == find) return tree;
 
-    // otherwise, recursive call
-    else
-        result = searchNode((root->data > x) ? root->left : root->right, x);
-    
+    NODE* result = NULL;
+
+    if (tree->left) result = searchNode(tree->left, find);
+    if (result) return result;
+
+    if (tree->right) result = searchNode(tree->right, find);
     return result;
 }
