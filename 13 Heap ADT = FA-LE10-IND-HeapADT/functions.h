@@ -40,8 +40,8 @@
 
     // in delete.c
     void deleteMenu(NODE** root, int* count);
-    int deleteNode(NODE** root, int delValue, int* size);
-    NODE* searchNode(NODE* tree, int x);
+    void deleteNode(NODE** root, int delValue, int* size);
+    NODE* searchNode(NODE* tree, int find);
 
     // in traverse.c
     void treeDisplay(NODE* root, int match);

@@ -6,52 +6,45 @@
 
 void deleteMenu(NODE** root, int* count){
 
-    int delValue, isDeleted;
-
     COLOR_BLUE;
     printf("=== DELETE A NODE ===\n");
     TEXT_RESET;
-    printf("value to delete: ");
-    scanf(" %d", &delValue);
-    printf("\n");
 
-    isDeleted = deleteNode(root, delValue, count);
-    printf("Tree display: ");
-    treeDisplay(*root, -999);
-    printf("\n");
-
-    if (isDeleted){
-        COLOR_GREEN;
-        printf("Success!\n");
-        TEXT_RESET;
-        printf("Node removed\n");
-    } else {
+    if(!*root){
+        printf("Tree display: ");
+        treeDisplay(*root, -999);
         COLOR_RED;
         printf("FAILED!\n");
         TEXT_RESET;
         printf("Data not found in tree\n");
+    } else {
+        deleteNode(root, (*root)->data, count);
+        COLOR_GREEN;
+        printf("Success!\n");
+        TEXT_RESET;
+        printf("Node removed\n");
     }
+
 
     printf("Press any key to continue\n");
     getche();
 }
 
-int deleteNode(NODE** root, int delValue, int* size){
+void deleteNode(NODE** root, int delValue, int* size){
 
-    if (!*root) return 0;
+    treeDisplay(*root, delValue);
 
     if (*size == 1){
         if ((*root)->data == delValue) {
             (*size)--;
             free(*root);
             *root = NULL;
-            return 1;
+        }
 
-        } else return 0;
+        return;
     }
 
-    NODE* toReplace = searchNode(*root, delValue);
-    if (!toReplace) return 0;
+    NODE* toReplace = searchNode(*root, delValue); // can be replaced with *root
 
     NODE* toDelete = *root;
     int movement = 1;
@@ -72,7 +65,31 @@ int deleteNode(NODE** root, int delValue, int* size){
     }
 
     (*size)--;
-    return 1;
+
+    // sinking
+    NODE* topNode = *root;
+
+    while (1){
+        treeDisplay(*root, topNode->data);
+        NODE* left = topNode->left;
+        NODE* right = topNode->right;
+
+        if (!right) break;
+
+        NODE* bottomNode = right;
+        if (left) if (right->data > left->data) bottomNode = left;
+
+        if (bottomNode->data > topNode->data) break;
+
+        int temp = bottomNode->data;
+        bottomNode->data = topNode->data;
+        topNode->data = temp;
+
+        topNode = bottomNode;
+        
+    }
+
+    return;
 }
 
 NODE* searchNode(NODE* tree, int find){
