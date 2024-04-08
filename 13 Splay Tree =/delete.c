@@ -140,10 +140,6 @@ LIST* deleteNode(NODE** root, int data){
     // when replaced node exists; ie not NULL
     if(*parentNode){
         push(&traversed, *parentNode);
-
-        // when replaced node has right children
-        if((*parentNode)->right)
-            push(&traversed, (*parentNode)->right);
     }
 
     return traversed;

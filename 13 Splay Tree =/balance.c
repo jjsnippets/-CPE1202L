@@ -33,6 +33,38 @@ ARGUMENTS
 ======================================================
 */
 void balanceTree(NODE** root, LIST* checkNodes){
+
+    if (checkNodes){
+        while(checkNodes){
+            NODE* currentNode = pop(&checkNodes);
+            NODE* parentNode = NULL;
+            NODE* grandparentNode = NULL;
+
+            if(checkNodes){
+                parentNode = pop(&checkNodes);
+
+                if(checkNodes)
+                    grandparentNode = pop(&checkNodes);
+                else
+                    break;
+            }
+
+
+            
+
+
+
+
+
+
+
+
+
+        }
+    }
+
+
+   /* 
     // when and while there are nodes that needs their balance factors checked
     if (checkNodes){
         while(checkNodes){
@@ -72,6 +104,7 @@ void balanceTree(NODE** root, LIST* checkNodes){
             }
         }
     }
+    */
 }
 
 /*

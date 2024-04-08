@@ -82,6 +82,7 @@ LIST* addNode(NODE** root, int data){
     if (!*root){
         *root = calloc(1, sizeof(NODE));
         (*root)->data = data;
+        push(&traversed, *root);
 
     // otherwise
     } else {
@@ -103,6 +104,7 @@ LIST* addNode(NODE** root, int data){
 
         // insert node in position
         *nextNode = newNode;
+        push(&traversed, *nextNode);
     }
 
     return traversed;
