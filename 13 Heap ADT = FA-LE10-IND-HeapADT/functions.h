@@ -26,14 +26,17 @@
         struct node* right;
     } NODE;
 
-    typedef struct queue {
+    typedef struct list{
         NODE* node;
-        struct queue* next;
-    } QUEUE;
+        struct list* next;
+    } LIST;
 
     // in add.c
     void addMenu(NODE** root, int* count);
     void addNode(NODE** root, int addValue, int* size);
+
+    void push(LIST** head, NODE* toAdd);
+    NODE* pop(LIST** head);
 
     // in delete.c
     void deleteMenu(NODE** root, int* count);
