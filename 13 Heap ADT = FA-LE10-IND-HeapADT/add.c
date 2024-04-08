@@ -28,10 +28,10 @@ void addMenu(NODE** root, int* count){
     getche();
 }
 
-void addNode(NODE** root, int data, int* size){
+void addNode(NODE** root, int addValue, int* size){
 
     NODE* newNode = calloc(1, sizeof(NODE));
-    newNode->x = data;
+    newNode->data = addValue;
 
     if (!(*size)++){
         *root = newNode;

@@ -36,12 +36,12 @@ void deleteMenu(NODE** root, int* count){
     getche();
 }
 
-int deleteNode(NODE** root, int data, int* size){
+int deleteNode(NODE** root, int delValue, int* size){
 
     if (!*root) return 0;
 
     if (*size == 1){
-        if ((*root)->x == data) {
+        if ((*root)->data == delValue) {
             (*size)--;
             free(*root);
             *root = NULL;
@@ -50,7 +50,7 @@ int deleteNode(NODE** root, int data, int* size){
         } else return 0;
     }
 
-    NODE* toReplace = searchNode(*root, data);
+    NODE* toReplace = searchNode(*root, delValue);
     if (!toReplace) return 0;
 
     NODE* toDelete = *root;
@@ -60,7 +60,7 @@ int deleteNode(NODE** root, int data, int* size){
 
     for (; movement > 1; movement >>= 1)
         toDelete = (*size & movement) ? (toDelete->right) : (toDelete->left);
-    toReplace->x = ((*size % 2) ? toDelete->right : toDelete->left)->x;
+    toReplace->data = ((*size % 2) ? toDelete->right : toDelete->left)->data;
 
     if (*size % 2){
         free(toDelete->right);
@@ -78,7 +78,7 @@ int deleteNode(NODE** root, int data, int* size){
 NODE* searchNode(NODE* tree, int find){
 
     if (!tree) return NULL;
-    if (tree->x == find) return tree;
+    if (tree->data == find) return tree;
 
     NODE* result = NULL;
 

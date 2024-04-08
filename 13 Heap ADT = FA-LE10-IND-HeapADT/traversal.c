@@ -45,7 +45,7 @@ void breadthFirst(NODE** root){
         toPrint = dequeue(&bft);
         if (toPrint->left) enqueue(&bft, toPrint->left);
         if (toPrint->right) enqueue(&bft, toPrint->right);
-        printf("%d ", toPrint->x);
+        printf("%d ", toPrint->data);
     }
 }
 
@@ -53,14 +53,14 @@ void inOrder(NODE* root, int depth){
     if (!root) return;
 
     inOrder(root->left, depth + 1);
-    printf("%d ", root->x);
+    printf("%d ", root->data);
     inOrder(root->right, depth + 1);
 }
 
 void preOrder(NODE* root, int depth){
     if (!root) return;
 
-    printf("%d ", root->x);
+    printf("%d ", root->data);
     preOrder(root->left, depth + 1);
     preOrder(root->right, depth + 1);
 }
@@ -70,7 +70,7 @@ void postOrder(NODE* root, int depth){
 
     postOrder(root->left, depth + 1);
     postOrder(root->right, depth + 1);
-    printf("%d ", root->x);
+    printf("%d ", root->data);
 }
 
 void treeMode(NODE* root){
@@ -104,7 +104,7 @@ void treeDisplay(NODE* root, int depth){
 
     treeDisplay(root->left, depth + 1);
     MOVE_DOWN(depth);
-    printf("[%3d]", root->x, depth);
+    printf("[%3d]", root->data, depth);
     MOVE_UP(depth);
     MOVE_LEFT(1);
     treeDisplay(root->right, depth + 1);
@@ -114,13 +114,13 @@ void enqueue(QUEUE** head, NODE* toAdd){
 
     if (!*head){
         *head = calloc(1, sizeof(QUEUE));
-        (*head)->data = toAdd;
+        (*head)->node = toAdd;
         return;
     }
 
     QUEUE* lastQueue = *head;
     QUEUE* insertEnd = calloc(1, sizeof(QUEUE));
-    insertEnd->data = toAdd;
+    insertEnd->node = toAdd;
 
     while (lastQueue->next) lastQueue = lastQueue->next;
     lastQueue->next = insertEnd;
@@ -129,7 +129,7 @@ void enqueue(QUEUE** head, NODE* toAdd){
 NODE* dequeue(QUEUE** head){
 
     NODE* result = calloc(1, sizeof(NODE));
-    result = (*head)->data;
+    result = (*head)->node;
 
     QUEUE* newHead = (*head)->next ? (*head)->next : NULL;
 

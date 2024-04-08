@@ -21,23 +21,23 @@
 
     // structure definitions
     typedef struct node {
-        int x;
+        int data;
         struct node* left;
         struct node* right;
     } NODE;
 
     typedef struct queue {
-        NODE* data;
+        NODE* node;
         struct queue* next;
     } QUEUE;
 
     // in add.c
     void addMenu(NODE** root, int* count);
-    void addNode(NODE** root, int data, int* size);
+    void addNode(NODE** root, int addValue, int* size);
 
     // in delete.c
     void deleteMenu(NODE** root, int* count);
-    int deleteNode(NODE** root, int data, int* size);
+    int deleteNode(NODE** root, int delValue, int* size);
     NODE* searchNode(NODE* tree, int find);
 
     // in traverse.c
