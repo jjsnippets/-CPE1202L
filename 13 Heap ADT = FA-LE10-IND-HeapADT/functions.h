@@ -7,12 +7,12 @@
     // only one of the following text alterations can be applied at a time
         // applies bold to text
         #define BOLD_TEXT printf("\e[1m")
-        
+
         // applies color to text
         #define COLOR_RED printf("\e[91m")
         #define COLOR_GREEN printf("\e[92m")
         #define COLOR_BLUE printf("\e[94m")
-        #define COLOR_PINK printf("\e[95m") 
+        #define COLOR_PINK printf("\e[95m")
 
     // moves cursor by 'x' spaces
     #define MOVE_UP(x) printf("\e[%dA", x)
@@ -41,22 +41,11 @@
     // in delete.c
     void deleteMenu(NODE** root, int* count);
     void deleteNode(NODE** root, int delValue, int* size);
-    NODE* searchNode(NODE* tree, int find);
 
     // in traverse.c
     void treeDisplay(NODE* root, int match);
     void showLeaves(NODE* root, int depth, int match);
     int treeDepth(NODE* root, int depth);
-
-    /*
-        void traversalMenu(NODE** root, int* count);
-        void breadthFirst(NODE** root);
-        void inOrder(NODE* root, int depth);
-        void preOrder(NODE* root, int depth);
-        void postOrder(NODE* root, int depth);
-
-        void enqueue(QUEUE** head, NODE* toAdd);
-        NODE* dequeue(QUEUE** head);
-    */
+    void waitForUser();
 
 #endif

@@ -13,11 +13,9 @@ void addMenu(NODE** root, int* count){
     TEXT_RESET;
     printf("Insert value to add: ");
     scanf(" %d", &newValue);
-    printf("\n");
 
     addNode(root, newValue, count);
-    printf("Tree display: ");
-    treeDisplay(*root, -999);
+    treeDisplay(*root, newValue);
     printf("\n");
 
     COLOR_GREEN;
@@ -54,11 +52,14 @@ void addNode(NODE** root, int addValue, int* size){
         push(&visitedNodes, currentNode);
     }
 
+    // swimming
     push(&visitedNodes, newNode);
     NODE* bottomNode = pop(&visitedNodes);
 
     while(visitedNodes){
         treeDisplay(*root, addValue);
+        printf("\n");
+        waitForUser();
 
         NODE* topNode = pop(&visitedNodes);
 
@@ -70,19 +71,8 @@ void addNode(NODE** root, int addValue, int* size){
 
         bottomNode = topNode;
     }
-
 }
 
-/*
-======================================================
-FUNCTION    : push
-DESCRIPTION : push implemntation for a stack linked list
-                  inserts at the head end
-ARGUMENTS
-    LIST** head - pointer to stack
-    NODE* toAdd - node to add to stack
-======================================================
-*/
 void push(LIST** head, NODE* toAdd){
     LIST* newHead = calloc(1, sizeof(LIST));
     newHead->node = toAdd;
@@ -92,18 +82,6 @@ void push(LIST** head, NODE* toAdd){
     *head = newHead;
 }
 
-/*
-======================================================
-FUNCTION    : pop
-DESCRIPTION : pop implemntation for a stack linked list
-                  removes at the head end
-ARGUMENTS
-    LIST** head - pointer to stack
-
-RETURNS
-    NODE* - newest node that was added to stack
-======================================================
-*/
 NODE* pop(LIST** head){
     NODE* result = (*head)->node;
     *head = (*head)->next;

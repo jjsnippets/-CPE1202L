@@ -13,7 +13,7 @@ void main(){
     do{
         system("cls");
         BOLD_TEXT;
-        printf("=== MAIN MENU ===\n");
+        printf("=== MIN HEAP MAIN MENU ===\n");
         TEXT_RESET;
         printf("[1] Add new node\n");
         printf("[2] Delete a node\n");
