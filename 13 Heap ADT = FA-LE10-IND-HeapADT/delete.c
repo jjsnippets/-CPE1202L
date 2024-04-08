@@ -17,7 +17,7 @@ void deleteMenu(NODE** root, int* count){
 
     isDeleted = deleteNode(root, delValue, count);
     printf("Tree display: ");
-    treeMode(*root);
+    treeDisplay(*root, -999);
     printf("\n");
 
     if (isDeleted){
@@ -75,16 +75,20 @@ int deleteNode(NODE** root, int delValue, int* size){
     return 1;
 }
 
-NODE* searchNode(NODE* tree, int find){
+NODE* searchNode(NODE* root, int x){
+    NODE* result;
 
-    if (!tree) return NULL;
-    if (tree->data == find) return tree;
+    // when node is NULL
+    if (!root)
+        result = NULL;
+    
+    // when node is found
+    else if (root->data == x)
+        result = root;
 
-    NODE* result = NULL;
-
-    if (tree->left) result = searchNode(tree->left, find);
-    if (result) return result;
-
-    if (tree->right) result = searchNode(tree->right, find);
+    // otherwise, recursive call
+    else
+        result = searchNode((root->data > x) ? root->left : root->right, x);
+    
     return result;
 }

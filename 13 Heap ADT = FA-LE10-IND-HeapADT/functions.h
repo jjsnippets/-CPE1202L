@@ -38,20 +38,22 @@
     // in delete.c
     void deleteMenu(NODE** root, int* count);
     int deleteNode(NODE** root, int delValue, int* size);
-    NODE* searchNode(NODE* tree, int find);
+    NODE* searchNode(NODE* tree, int x);
 
     // in traverse.c
-    void traversalMenu(NODE** root, int* count);
-    void breadthFirst(NODE** root);
-    void inOrder(NODE* root, int depth);
-    void preOrder(NODE* root, int depth);
-    void postOrder(NODE* root, int depth);
-
-    void treeDisplay(NODE* root, int depth);
-    void treeMode(NODE* root);
+    void treeDisplay(NODE* root, int match);
+    void showLeaves(NODE* root, int depth, int match);
     int treeDepth(NODE* root, int depth);
 
-    void enqueue(QUEUE** head, NODE* toAdd);
-    NODE* dequeue(QUEUE** head);
+    /*
+        void traversalMenu(NODE** root, int* count);
+        void breadthFirst(NODE** root);
+        void inOrder(NODE* root, int depth);
+        void preOrder(NODE* root, int depth);
+        void postOrder(NODE* root, int depth);
+
+        void enqueue(QUEUE** head, NODE* toAdd);
+        NODE* dequeue(QUEUE** head);
+    */
 
 #endif

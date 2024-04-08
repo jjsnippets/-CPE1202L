@@ -17,7 +17,7 @@ void addMenu(NODE** root, int* count){
 
     addNode(root, newValue, count);
     printf("Tree display: ");
-    treeMode(*root);
+    treeDisplay(*root, -999);
     printf("\n");
 
     COLOR_GREEN;
