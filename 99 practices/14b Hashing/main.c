@@ -1,18 +1,14 @@
+// NOTE: practice and proof of concept only. Can certainly be made shorter by modularizing some sections of code
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <conio.h>
 #include <math.h>
-#include "functions.h"
 
 #define TEXT_RESET printf("\e[m")
 #define BOLD_TEXT printf("\e[1m")
 #define COLOR_RED printf("\e[91m")
-#define COLOR_GREEN printf("\e[92m")
 #define COLOR_BLUE printf("\e[94m")
-#define COLOR_PINK printf("\e[95m")
-
-void codeUpdate();
 
 typedef struct list{
     int data;
@@ -52,8 +48,6 @@ int main() {
     int size = 0;
 
     system("cls");
-    codeUpdate();
-
     printf("Enter sequence of numbers\n");
     printf("Separated by spaces, ! as the terminator\n");
     scanf("%[^\n]249s", numbers);
@@ -62,15 +56,15 @@ int main() {
     numbers[strlen(numbers)] = ' ';
     numbers[strlen(numbers)] = '!';
 
-    printf("Generated list: {");
+    printf("\nGenerated list: {");
 
     for(current = strtok(numbers, " "); strcmp(current, "!"); current = strtok(NULL, " ")){
         temp[size++] = atoi(current);
         printf("%d, ", temp[size - 1]);
     }
 
-    printf("\d\d}\n");
-    printf("Size of list: %d\n\n", size);
+    printf("\b\b}\n");
+    printf("Size of list: %d\n\n\n", size);
 
     int* keys = calloc(size, sizeof(int));
     for(int i = 0; i < size; i++) keys[i] = temp[i];
@@ -88,10 +82,12 @@ int main() {
         }
 
         COLOR_BLUE;
-        printf("== Open hasing ===\n");
+        printf("== Open hashing ===\n");
         TEXT_RESET;
         printf("Current hash function:\n");
+        BOLD_TEXT;
         printf("H(k) = k mod %d\n", prime1);
+        TEXT_RESET;
         printf("\n");
 
         for (int i = 0; i < size; i++){
@@ -111,14 +107,12 @@ int main() {
                     printf("%d -> ", currentNode->data);
                     currentNode = currentNode->next;
                 }
-                printf("\d\d\d\d\n");
+                printf("\b\b\b\b   \n");
             } else
                 printf("\n");
 
         }
-
-        printf("Complete!\n\n");
-
+        printf("\n\n");
     }
 
     // linear hashing
@@ -129,7 +123,9 @@ int main() {
         printf("== Linear hashing ===\n");
         TEXT_RESET;
         printf("Current hash function:\n");
+        BOLD_TEXT;
         printf("H(k) = (i + k) mod %d\n", prime1);
+        TEXT_RESET;
         printf("\n");
 
         for (int h = 0; h < size; h++){
@@ -156,8 +152,7 @@ int main() {
             if(linHash[i]) printf("%d", linHash[i]);
             printf("\n");
         }
-
-        printf("Complete!\n\n");
+        printf("\n\n");
     }
 
     // quadratic hashing
@@ -168,7 +163,9 @@ int main() {
         printf("== Quadratic hashing ===\n");
         TEXT_RESET;
         printf("Current hash function:\n");
+        BOLD_TEXT;
         printf("H(k) = (i^2 + k) mod %d\n", prime1);
+        TEXT_RESET;
         printf("\n");
 
         for (int h = 0; h < size; h++){
@@ -195,13 +192,46 @@ int main() {
             if(quadHash[i]) printf("%d", quadHash[i]);
             printf("\n");
         }
-
-        printf("Complete!\n\n");
+        printf("\n\n");
     }
 
+    // double hashing
+    {
+        int* doubHash = calloc(prime1, sizeof(int));
 
-}
+        COLOR_BLUE;
+        printf("== Double hashing ===\n");
+        TEXT_RESET;
+        printf("Current hash function:\n");
+        BOLD_TEXT;
+        printf("H(k) = ((k mod %d) + i * (%d - (k mod %d))) mod %d\n", prime1, prime2, prime2, prime1);
+        TEXT_RESET;
+        printf("\n");
 
-void codeUpdate(){
-    printf("%d\n", __LINE__);
+        for (int h = 0; h < size; h++){
+            for (int i = 0;; i++){
+                int index = (keys[h] + i * (prime2 - (keys[h] % prime2))) % prime1;
+                printf("H(%d) = ((%d mod %d) + %d * (%d - (%d mod %d))) mod %d = %d", keys[h], keys[h], prime1, i, prime2, keys[h], prime2, prime1, index);
+
+                if(doubHash[index]){
+                    COLOR_RED;
+                    printf("\tCollision!\n");
+                    TEXT_RESET;
+                    continue;
+                } else {
+                    printf("\n");
+                    doubHash[index] = keys[h];
+                    break;
+                }
+            }
+        }
+
+        printf("\nFormed Hash Table:\n");
+        for(int i = 0; i < prime1; i++){
+            printf("%d: ", i);
+            if(doubHash[i]) printf("%d", doubHash[i]);
+            printf("\n");
+        }
+        printf("\n\n");
+    }
 }
