@@ -10,7 +10,7 @@
     } GRAPH;
 
     typedef struct list{
-        graph* data;
+        GRAPH* data;
         struct list* next;
     } LIST;
 
