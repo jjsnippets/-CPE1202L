@@ -93,7 +93,6 @@ void addEdge(GRAPH** graph, char outBound, char inBound, int weight){
 }
 
 void printMatrix(GRAPH* graph, int vertexCount){
-
     printf("\nAdjacency matrix:\n");
     
     char* vertexList = calloc(vertexCount + 1, sizeof(char));
@@ -133,8 +132,29 @@ void printMatrix(GRAPH* graph, int vertexCount){
         }
         printf("\n");
         currentVertex = currentVertex->nextVertex;
-        
     }
+    printf("\n");
+
+}
+
+void printLists(GRAPH* graph, int vertexCount){
+    printf("Adjacency List:\n");
+
+    GRAPH* currentVertex = graph;
+    while (currentVertex){
+        // per vertex
+        printf("{%c} -> ", currentVertex->vertexName);
+
+        GRAPH* currentEdge = currentVertex->nextEdge;
+        while (currentEdge){
+            // per edge
+            printf("[%c <%d>] -> ", currentEdge->vertexName, currentEdge->edgeWeight);
+            currentEdge = currentEdge->nextEdge;
+        }
+        printf("\b\b\b\b    \n");
+        currentVertex = currentVertex->nextVertex;
+    }
+    printf("\n");
 }
 
 int main(){
@@ -171,6 +191,7 @@ int main(){
 
     printf("Vertex count: %d\n", vertexCount);
     printMatrix(graph, vertexCount);
+    printLists(graph, vertexCount);
 
     printf("\nSUCCESS!\n");
     return 0;
