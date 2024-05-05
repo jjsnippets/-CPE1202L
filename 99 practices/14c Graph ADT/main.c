@@ -75,7 +75,7 @@ void addEdge(GRAPH** graph, char outBound, char inBound, int weight){
         *currentEdge = calloc(1, sizeof(GRAPH));
         (*currentEdge)->vertexName = inBound;
         (*currentEdge)->edgeWeight = weight;
-        (*currentEdge)->nextVertex = toVertex;
+        (*currentEdge)->nextVertex = toVertex; // adds a connection back to vertex
         return;
     }
 
@@ -88,7 +88,7 @@ void addEdge(GRAPH** graph, char outBound, char inBound, int weight){
     GRAPH* newEdge = calloc(1, sizeof(GRAPH));
     newEdge->vertexName = inBound;
     newEdge->edgeWeight = weight;
-    newEdge->nextVertex = toVertex;
+    newEdge->nextVertex = toVertex; // adds a connection back to vertex
 
     // if at the end of the list, then insert at end
     if (!*currentEdge){
@@ -234,7 +234,7 @@ void depthFirstTraversal(GRAPH* graph){
     while (stack){
         currentVertex = pop(&stack);
         if (!currentVertex->visited){
-            printf("\n%c -> ", currentVertex->vertexName);
+            printf("%c -> ", currentVertex->vertexName);
             currentVertex->visited = 1;
             
             GRAPH* currentEdge = currentVertex->nextEdge;
@@ -253,26 +253,25 @@ void breathFirstTraversal(GRAPH* graph){
     printf("Breath First Traversal: \n");
 
     zeroVisited(graph);
-    LIST* queue = NULL;
+    LIST* queue = NULL; // queue-related functions are the only modifications from depth first traversal
 
     GRAPH* currentVertex = graph;
     enqueue(&queue, currentVertex);
 
     while (queue){
-        currentVertex = dequeue(&queue);
+        currentVertex = dequeue(&queue); // dequeue instead of pop
         if (!currentVertex->visited){
-            printf("\n%c -> ", currentVertex->vertexName);
+            printf("%c -> ", currentVertex->vertexName);
             currentVertex->visited = 1;
             
             GRAPH* currentEdge = currentVertex->nextEdge;
             while (currentEdge){
                 if (!currentEdge->nextVertex->visited && !isInList(queue, currentEdge->vertexName))
-                    enqueue(&queue, currentEdge->nextVertex);
+                    enqueue(&queue, currentEdge->nextVertex); // enqueue instead of push
                 currentEdge = currentEdge->nextEdge;
             }
         }
     }
-
     printf("\b\b\b\b     \n");
     
 }
