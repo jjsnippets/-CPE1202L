@@ -16,21 +16,37 @@ typedef struct list{
     struct list* next;
 } LIST;
 
-void addVertex(GRAPH** graph, int* vertexCount, char value){
-    // search in vertex list
-    GRAPH** currentOutbound = graph;
-    while (*currentOutbound){
-        if ((*currentOutbound)->vertexName == value) break;
-        currentOutbound = &(*currentOutbound)->nextVertex;
+void addVertex(GRAPH** graph, int* vertexCount, char name){
+    // if empty, create new vertex
+    if(!*graph){
+        *graph = calloc(1, sizeof(GRAPH));
+        (*graph)->vertexName = name;
+        (*vertexCount)++;
+        return;
     }
 
-    // if not found, create new vertex
-    if (!*currentOutbound){
-        GRAPH* newVertex = calloc(1, sizeof(GRAPH));
-        newVertex->vertexName = value;
-        *currentOutbound = newVertex;
-        (*vertexCount)++;
+    // otherwise search in vertex list
+    GRAPH** currentOutbound = graph;
+    while (*currentOutbound && (*currentOutbound)->vertexName <= name){
+        if ((*currentOutbound)->vertexName == name) return;
+        currentOutbound = &((*currentOutbound)->nextVertex);
     }
+
+    GRAPH* newVertex = calloc(1, sizeof(GRAPH));
+    newVertex->vertexName = name;
+
+    // if at the end of the list, then insert at end
+    if (!*currentOutbound){
+        *currentOutbound = newVertex;
+    
+    // else, displace the current vertex to next position
+    } else {
+        GRAPH* temp = (*currentOutbound);
+        (*currentOutbound) = newVertex;
+        newVertex->nextVertex = temp;
+    }
+
+    (*vertexCount)++;
 }
 
 void addEdge(GRAPH** graph, char outBound, char inBound, int weight){
@@ -49,6 +65,47 @@ void addEdge(GRAPH** graph, char outBound, char inBound, int weight){
     newEdge->vertexName = inBound;
     newEdge->edgeWeight = weight;
     *currentEdge = newEdge;
+}
+
+void printMatrix(GRAPH* graph, int vertexCount){
+
+    char* vertexList = calloc(vertexCount + 1, sizeof(char));
+    {
+        GRAPH* currentVertex = graph;
+        for (int i = 0; i < vertexCount; i++){
+            printf("%c ", currentVertex->vertexName);
+            vertexList[i] = currentVertex->vertexName;
+            currentVertex = currentVertex->nextVertex;
+        }
+    }
+
+    printf("\nAdjacency matrix:\n"); // printing in adjacency matrix format
+    {
+        // print column labels
+            printf("  ");
+            for (int i = 0; i < vertexCount; i++){
+                printf("%3c ", vertexList[i]);
+            }
+            printf("\n");
+
+        // print row labels and data
+            GRAPH* currentVertex = graph;
+            for (int i = 0; i < vertexCount; i++){
+                printf("%c ", vertexList[i]);
+                for (int j = 0; j < vertexCount; j++){
+                    GRAPH* currentEdge = currentVertex->nextEdge;
+                    while (currentEdge){
+                        if (currentEdge->vertexName == vertexList[j]){
+                            printf("%3d ", currentEdge->edgeWeight);
+                            break;
+                        }
+                        currentEdge = currentEdge->nextEdge;
+                    }
+                    if (!currentEdge) printf("  * ");
+                }
+                printf("\n");
+            }
+    }
 }
 
 int main(){
@@ -82,55 +139,13 @@ int main(){
             addVertex(&graph, &vertexCount, outBound);
             addEdge(&graph, outBound, inBound, weight);
             addVertex(&graph, &vertexCount, inBound);
+            printMatrix(graph, vertexCount);
 
     } while (!strchr(numeric, '!'));
 
     printf("Vertex count: %d\n\n", vertexCount);
 
-    // create vertex list (for column labels)
-    char* vertexList = calloc(vertexCount + 1, sizeof(char));
-    {
-        GRAPH* currentVertex = graph;
-        for (int i = 0; i < vertexCount; i++){
-            vertexList[i] = currentVertex->vertexName;
-            currentVertex = currentVertex->nextVertex;
-        }
-    }
-
-    printf("Adjacency matrix:\n"); // printing in adjacency matrix format
-    {
-        // print column labels
-            printf("  ");
-            for (int i = 0; i < vertexCount; i++){
-                printf("%3c ", vertexList[i]);
-            }
-            printf("\n");
-
-        // print row labels and data
-            GRAPH* currentVertex = graph;
-            for (int i = 0; i < vertexCount; i++){
-                printf("%c ", vertexList[i]);
-                for (int j = 0; j < vertexCount; j++){
-                    GRAPH* currentEdge = currentVertex->nextEdge;
-                    while (currentEdge){
-                        if (currentEdge->vertexName == vertexList[j]){
-                            printf("%3d ", currentEdge->edgeWeight);
-                            break;
-                        }
-                        currentEdge = currentEdge->nextEdge;
-                    }
-                    if (!currentEdge) printf("    ");
-                }
-                printf("\n");
-                
-            
-            }
-
-
-    }
-
-
-
+    printMatrix(graph, vertexCount);
 
     printf("\nSUCCESS!\n");
     return 0;
