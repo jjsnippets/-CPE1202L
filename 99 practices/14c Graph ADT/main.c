@@ -3,6 +3,8 @@
 #include <string.h>
 #include <ctype.h>
 
+#define DIRECTED 0
+
 #define TEXT_RESET printf("\e[m")
 #define COLOR_GRAY printf("\e[90m")
 #define ROW_COLOR printf("\e[46m")
@@ -157,6 +159,68 @@ void printLists(GRAPH* graph, int vertexCount){
     printf("\n");
 }
 
+void push(LIST** list, GRAPH* data){
+    LIST* newNode = calloc(1, sizeof(LIST));
+    newNode->data = data;
+    newNode->next = *list;
+    *list = newNode;
+}
+
+GRAPH* pop(LIST** list){
+    if (!*list) return NULL;
+    GRAPH* data = (*list)->data;
+    *list = (*list)->next;
+    return data;
+}
+
+void enqueue(LIST** list, GRAPH* data){
+    LIST* newNode = calloc(1, sizeof(LIST));
+    newNode->data = data;
+    if (!*list){
+        *list = newNode;
+        return;
+    }
+
+    LIST* current = *list;
+    while (current->next) current = current->next;
+    current->next = newNode;
+}
+
+GRAPH* dequeue(LIST** list){
+    if (!*list) return NULL;
+    GRAPH* data = (*list)->data;
+    *list = (*list)->next;
+    return data;
+}
+
+void zeroVisited(GRAPH* graph){
+    GRAPH* currentVertex = graph;
+    while (currentVertex){
+        currentVertex->visited = 0;
+        GRAPH* currentEdge = currentVertex->nextEdge;
+        while (currentEdge){
+            currentEdge->visited = 0;
+            currentEdge = currentEdge->nextEdge;
+        }
+        currentVertex = currentVertex->nextVertex;
+    }
+}
+
+void depthFirstSearch(GRAPH* graph, int vertexCount){
+    GRAPH* currentVertex = graph;
+    zeroVisited(graph);
+
+
+
+    currentVertex = graph;
+    while (currentVertex){
+        if (!currentVertex->visited){
+            // DFS
+        }
+        currentVertex = currentVertex->nextVertex;
+    }
+}
+
 int main(){
 
     char* data = calloc(250, sizeof(char));
@@ -186,6 +250,7 @@ int main(){
             addVertex(&graph, &vertexCount, outBound);
             addEdge(&graph, outBound, inBound, weight);
             addVertex(&graph, &vertexCount, inBound);
+            if(!DIRECTED) addEdge(&graph, inBound, outBound, weight);
 
     } while (!strchr(numeric, '!'));
 
