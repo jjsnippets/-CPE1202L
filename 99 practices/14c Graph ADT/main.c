@@ -85,4 +85,54 @@ int main(){
                 }
 
     } while (!strchr(numeric, '!'));
+
+    printf("Vertex count: %d\n\n", vertexCount);
+
+    // create vertex list (for column labels)
+    char* vertexList = calloc(vertexCount + 1, sizeof(char));
+    {
+        GRAPH* currentVertex = graph;
+        for (int i = 0; i < vertexCount; i++){
+            vertexList[i] = currentVertex->vertexName;
+            currentVertex = currentVertex->nextVertex;
+        }
+    }
+
+    printf("Adjacency matrix:\n"); // printing in adjacency matrix format
+    {
+        // print column labels
+            printf("  ");
+            for (int i = 0; i < vertexCount; i++){
+                printf("%3c ", vertexList[i]);
+            }
+            printf("\n");
+
+        // print row labels and data
+            GRAPH* currentVertex = graph;
+            for (int i = 0; i < vertexCount; i++){
+                printf("%c ", vertexList[i]);
+                for (int j = 0; j < vertexCount; j++){
+                    GRAPH* currentEdge = currentVertex->nextEdge;
+                    while (currentEdge){
+                        if (currentEdge->vertexName == vertexList[j]){
+                            printf("%3d ", currentEdge->edgeWeight);
+                            break;
+                        }
+                        currentEdge = currentEdge->nextEdge;
+                    }
+                    if (!currentEdge) printf("    ");
+                }
+                printf("\n");
+                
+            
+            }
+
+
+    }
+
+
+
+
+    printf("\nSUCCESS!\n");
+    return 0;
 }
