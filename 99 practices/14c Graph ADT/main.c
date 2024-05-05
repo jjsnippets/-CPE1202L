@@ -3,6 +3,11 @@
 #include <string.h>
 #include <ctype.h>
 
+#define TEXT_RESET printf("\e[m")
+#define COLOR_GRAY printf("\e[90m")
+#define ROW_COLOR printf("\e[46m")
+#define COL_COLOR printf("\e[44m")
+
 typedef struct graph{
     char vertexName;
     int edgeWeight;
@@ -97,7 +102,9 @@ void printMatrix(GRAPH* graph, int vertexCount){
         printf("  ");
         GRAPH* currentVertex = graph;
         for (int i = 0; i < vertexCount; i++){
+            ROW_COLOR;
             printf("%3c ", currentVertex->vertexName);
+            TEXT_RESET;
             vertexList[i] = currentVertex->vertexName;
             currentVertex = currentVertex->nextVertex;
         }
@@ -105,23 +112,28 @@ void printMatrix(GRAPH* graph, int vertexCount){
     }
 
     // print row labels and data
-    {     
-        GRAPH* currentVertex = graph;
-        for (int i = 0; i < vertexCount; i++){
-            printf("%c ", vertexList[i]);
-            for (int j = 0; j < vertexCount; j++){
-                GRAPH* currentEdge = currentVertex->nextEdge;
-                
-                while (currentEdge){
-                    if (currentEdge->vertexName == vertexList[j])
-                        printf("%3d ", currentEdge->edgeWeight);
-                    else 
-                        if (!currentEdge) printf("  * ");
-                    currentEdge = currentEdge->nextEdge;
-                }
+    GRAPH* currentVertex = graph;
+
+    for (int i = 0; i < vertexCount; i++){
+        COL_COLOR;
+        printf("%c ", vertexList[i]);
+        TEXT_RESET;
+
+        GRAPH* currentEdge = currentVertex->nextEdge;
+        for (int j = 0, k = 0; j < vertexCount; j++){
+            if (currentEdge && currentEdge->vertexName == vertexList[j]){
+                printf("%3d ", currentEdge->edgeWeight);
+                currentEdge = currentEdge->nextEdge;
+                k++;
+            } else {
+                COLOR_GRAY;
+                printf("  * ");
+                TEXT_RESET;
             }
-            printf("\n");
         }
+        printf("\n");
+        currentVertex = currentVertex->nextVertex;
+        
     }
 }
 
@@ -150,20 +162,14 @@ int main(){
             strcpy(numeric, strtok(NULL, ", "));
             int weight = atoi(numeric);
 
-            printf("\nOutbound: %c, Inbound: %c, Weight: %d\n", outBound, inBound, weight);
-
         // addition of vertex-edge pair
             addVertex(&graph, &vertexCount, outBound);
-            printMatrix(graph, vertexCount);
             addEdge(&graph, outBound, inBound, weight);
-            printMatrix(graph, vertexCount);
             addVertex(&graph, &vertexCount, inBound);
-            printMatrix(graph, vertexCount);
 
     } while (!strchr(numeric, '!'));
 
-    printf("Vertex count: %d\n\n", vertexCount);
-
+    printf("Vertex count: %d\n", vertexCount);
     printMatrix(graph, vertexCount);
 
     printf("\nSUCCESS!\n");
