@@ -16,6 +16,41 @@ typedef struct list{
     struct list* next;
 } LIST;
 
+void addVertex(GRAPH** graph, int* vertexCount, char value){
+    // search in vertex list
+    GRAPH** currentOutbound = graph;
+    while (*currentOutbound){
+        if ((*currentOutbound)->vertexName == value) break;
+        currentOutbound = &(*currentOutbound)->nextVertex;
+    }
+
+    // if not found, create new vertex
+    if (!*currentOutbound){
+        GRAPH* newVertex = calloc(1, sizeof(GRAPH));
+        newVertex->vertexName = value;
+        *currentOutbound = newVertex;
+        (*vertexCount)++;
+    }
+}
+
+void addEdge(GRAPH** graph, char outBound, char inBound, int weight){
+    GRAPH** currentOutbound = graph;
+    while (*currentOutbound){
+        if ((*currentOutbound)->vertexName == outBound) break;
+        currentOutbound = &(*currentOutbound)->nextVertex;
+    }
+
+    GRAPH** currentEdge = &(*currentOutbound)->nextEdge;
+    while (*currentEdge){
+        currentEdge = &(*currentEdge)->nextEdge;
+    }
+
+    GRAPH* newEdge = calloc(1, sizeof(GRAPH));
+    newEdge->vertexName = inBound;
+    newEdge->edgeWeight = weight;
+    *currentEdge = newEdge;
+}
+
 int main(){
 
     char* data = calloc(250, sizeof(char));
@@ -44,45 +79,9 @@ int main(){
             printf("Outbound: %c, Inbound: %c, Weight: %d\n", outBound, inBound, weight);
 
         // addition of vertex-edge pair
-            // search of outbound in vertex list
-                GRAPH** currentOutbound = &graph;
-                while (*currentOutbound){
-                    if ((*currentOutbound)->vertexName == outBound) break;
-                    currentOutbound = &(*currentOutbound)->nextVertex;
-                }
-
-            // if not found, create new vertex
-                if (!*currentOutbound){
-                    GRAPH* newVertex = calloc(1, sizeof(GRAPH));
-                    newVertex->vertexName = outBound;
-                    *currentOutbound = newVertex;
-                    vertexCount++;
-                }
-
-            // add to edge list
-                GRAPH** currentEdge = &(*currentOutbound)->nextEdge;
-                while (*currentEdge){
-                    currentEdge = &(*currentEdge)->nextEdge;
-                }
-
-                GRAPH* newEdge = calloc(1, sizeof(GRAPH));
-                newEdge->vertexName = inBound;
-                newEdge->edgeWeight = weight;
-                *currentEdge = newEdge;
-
-            // addition of inbound to vertex list
-                GRAPH** currentInbound = &graph;
-                while (*currentInbound){
-                    if ((*currentInbound)->vertexName == inBound) break;
-                    currentInbound = &(*currentInbound)->nextVertex;
-                }
-
-                if (!*currentInbound){
-                    GRAPH* newVertex = calloc(1, sizeof(GRAPH));
-                    newVertex->vertexName = inBound;
-                    *currentInbound = newVertex;
-                    vertexCount++;
-                }
+            addVertex(&graph, &vertexCount, outBound);
+            addEdge(&graph, outBound, inBound, weight);
+            addVertex(&graph, &vertexCount, inBound);
 
     } while (!strchr(numeric, '!'));
 
