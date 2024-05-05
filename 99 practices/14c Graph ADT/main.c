@@ -2,32 +2,87 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "graphs.h"
+
+typedef struct graph{
+    char vertexName;
+    int edgeWeight;
+    int visited;
+    struct graph* nextVertex;
+    struct graph* nextEdge;
+} GRAPH;
+
+typedef struct list{
+    GRAPH* data;
+    struct list* next;
+} LIST;
 
 int main(){
 
     char* data = calloc(250, sizeof(char));
     char* numeric = calloc(25, sizeof(char));
-    int graphSize = 0;
+    int vertexCount = 0;
+
+    GRAPH* graph = NULL;
 
     system("cls");
 
     printf("Enter series of vertices and weights\n");
-    printf("Outbound_1, Inbound_1, Weight_1, [...] ! as the terminator\n");
-    printf("Example: A, B, 5, B, C, 7, C, A, 3 !\n");
+    printf("Outbound_1, Inbound_1, Weight_1, [...]! as the terminator\n");
+    printf("Example: A, B, 5, B, C, 7, C, A, 3!\n");
     
     scanf("%[^\n]249s", data);
     printf("\n");
 
     do{
-        char outBound = strtok(graphSize ? NULL : data, ", ")[0];
-        char inBound = strtok(NULL, ", ")[0];
-        memset(numeric, 0, 25);
-        strcpy(numeric, strtok(NULL, ", "));
-        int weight = atoi(numeric);
+        // user input and parsing
+            char outBound = toupper(strtok(vertexCount ? NULL : data, ", ")[0]);
+            char inBound = toupper(strtok(NULL, ", ")[0]);
+            memset(numeric, 0, 25);
+            strcpy(numeric, strtok(NULL, ", "));
+            int weight = atoi(numeric);
 
-        graphSize++;
-        printf("Outbound: %c, Inbound: %c, Weight: %d\n", outBound, inBound, weight);
+            printf("Outbound: %c, Inbound: %c, Weight: %d\n", outBound, inBound, weight);
+
+        // addition of vertex-edge pair
+            // search of outbound in vertex list
+                GRAPH** currentOutbound = &graph;
+                while (*currentOutbound){
+                    if ((*currentOutbound)->vertexName == outBound) break;
+                    currentOutbound = &(*currentOutbound)->nextVertex;
+                }
+
+            // if not found, create new vertex
+                if (!*currentOutbound){
+                    GRAPH* newVertex = calloc(1, sizeof(GRAPH));
+                    newVertex->vertexName = outBound;
+                    *currentOutbound = newVertex;
+                    vertexCount++;
+                }
+
+            // add to edge list
+                GRAPH** currentEdge = &(*currentOutbound)->nextEdge;
+                while (*currentEdge){
+                    currentEdge = &(*currentEdge)->nextEdge;
+                }
+
+                GRAPH* newEdge = calloc(1, sizeof(GRAPH));
+                newEdge->vertexName = inBound;
+                newEdge->edgeWeight = weight;
+                *currentEdge = newEdge;
+
+            // addition of inbound to vertex list
+                GRAPH** currentInbound = &graph;
+                while (*currentInbound){
+                    if ((*currentInbound)->vertexName == inBound) break;
+                    currentInbound = &(*currentInbound)->nextVertex;
+                }
+
+                if (!*currentInbound){
+                    GRAPH* newVertex = calloc(1, sizeof(GRAPH));
+                    newVertex->vertexName = inBound;
+                    *currentInbound = newVertex;
+                    vertexCount++;
+                }
 
     } while (!strchr(numeric, '!'));
 }
