@@ -222,7 +222,7 @@ void zeroVisited(GRAPH* graph){
     }
 }
 
-void depthFirstTraversal(GRAPH* graph, int vertexCount){
+void depthFirstTraversal(GRAPH* graph){
     printf("Depth First Traversal: \n");
 
     zeroVisited(graph);
@@ -239,10 +239,35 @@ void depthFirstTraversal(GRAPH* graph, int vertexCount){
             
             GRAPH* currentEdge = currentVertex->nextEdge;
             while (currentEdge){
-                if (!currentEdge->nextVertex->visited && !isInList(stack, currentEdge->vertexName)){
+                if (!currentEdge->nextVertex->visited && !isInList(stack, currentEdge->vertexName))
                     push(&stack, currentEdge->nextVertex);
-                    printf("[%c] ", currentEdge->vertexName);
-                }
+                currentEdge = currentEdge->nextEdge;
+            }
+        }
+    }
+    printf("\b\b\b\b     \n");
+    
+}
+
+void breathFirstTraversal(GRAPH* graph){
+    printf("Breath First Traversal: \n");
+
+    zeroVisited(graph);
+    LIST* queue = NULL;
+
+    GRAPH* currentVertex = graph;
+    enqueue(&queue, currentVertex);
+
+    while (queue){
+        currentVertex = dequeue(&queue);
+        if (!currentVertex->visited){
+            printf("\n%c -> ", currentVertex->vertexName);
+            currentVertex->visited = 1;
+            
+            GRAPH* currentEdge = currentVertex->nextEdge;
+            while (currentEdge){
+                if (!currentEdge->nextVertex->visited && !isInList(queue, currentEdge->vertexName))
+                    enqueue(&queue, currentEdge->nextVertex);
                 currentEdge = currentEdge->nextEdge;
             }
         }
@@ -292,7 +317,8 @@ int main(){
     printMatrix(graph, vertexCount);
     printLists(graph, vertexCount);
 
-    depthFirstTraversal(graph, vertexCount);
+    depthFirstTraversal(graph);
+    breathFirstTraversal(graph);
 
     printf("\nSUCCESS!\n");
     return 0;
