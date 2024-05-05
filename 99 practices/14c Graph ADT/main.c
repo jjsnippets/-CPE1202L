@@ -63,12 +63,19 @@ void addEdge(GRAPH** graph, char outBound, char inBound, int weight){
         currentOutbound = &(*currentOutbound)->nextVertex;
     }
 
+    GRAPH* toVertex = *graph;
+    while (toVertex){
+        if (toVertex->vertexName == inBound) break;
+        toVertex = toVertex->nextVertex;
+    }
+
     GRAPH** currentEdge = &(*currentOutbound)->nextEdge;
     // if empty, create new edge
     if(!*currentEdge){
         *currentEdge = calloc(1, sizeof(GRAPH));
         (*currentEdge)->vertexName = inBound;
         (*currentEdge)->edgeWeight = weight;
+        (*currentEdge)->nextVertex = toVertex;
         return;
     }
 
@@ -81,6 +88,7 @@ void addEdge(GRAPH** graph, char outBound, char inBound, int weight){
     GRAPH* newEdge = calloc(1, sizeof(GRAPH));
     newEdge->vertexName = inBound;
     newEdge->edgeWeight = weight;
+    newEdge->nextVertex = toVertex;
 
     // if at the end of the list, then insert at end
     if (!*currentEdge){
@@ -193,6 +201,14 @@ GRAPH* dequeue(LIST** list){
     return data;
 }
 
+int isInList(LIST* list, char data){
+    while (list){
+        if (list->data->vertexName == data) return 1;
+        list = list->next;
+    }
+    return 0;
+}
+
 void zeroVisited(GRAPH* graph){
     GRAPH* currentVertex = graph;
     while (currentVertex){
@@ -206,19 +222,34 @@ void zeroVisited(GRAPH* graph){
     }
 }
 
-void depthFirstSearch(GRAPH* graph, int vertexCount){
-    GRAPH* currentVertex = graph;
+void depthFirstTraversal(GRAPH* graph, int vertexCount){
+    printf("Depth First Traversal: \n");
+
     zeroVisited(graph);
+    LIST* stack = NULL;
 
+    GRAPH* currentVertex = graph;
+    push(&stack, currentVertex);
 
-
-    currentVertex = graph;
-    while (currentVertex){
+    while (stack){
+        currentVertex = pop(&stack);
         if (!currentVertex->visited){
-            // DFS
+            printf("\n%c -> ", currentVertex->vertexName);
+            currentVertex->visited = 1;
+            
+            GRAPH* currentEdge = currentVertex->nextEdge;
+            while (currentEdge){
+                if (!currentEdge->nextVertex->visited && !isInList(stack, currentEdge->vertexName)){
+                    push(&stack, currentEdge->nextVertex);
+                    printf("[%c] ", currentEdge->vertexName);
+                }
+                currentEdge = currentEdge->nextEdge;
+            }
         }
-        currentVertex = currentVertex->nextVertex;
     }
+
+    printf("\b\b\b\b     \n");
+    
 }
 
 int main(){
@@ -229,11 +260,14 @@ int main(){
 
     GRAPH* graph = NULL;
 
+    printf("Graph ADT\n\n");
     system("cls");
 
+    printf("Graph ADT\n");
     printf("Enter series of vertices and weights\n");
     printf("Outbound_1, Inbound_1, Weight_1, [...]! as the terminator\n");
     printf("Example: A, B, 5, B, C, 7, C, A, 3!\n");
+    printf("Test case: a, x, 1, x, h, 2, x, g, 3, g, h, 4, g, p, 5, h, p, 6, h, e, 7, e, y, 8, e, m, 9, y, m, 11, m, j, 11!\n");
     
     scanf("%[^\n]249s", data);
     printf("\n");
@@ -248,8 +282,8 @@ int main(){
 
         // addition of vertex-edge pair
             addVertex(&graph, &vertexCount, outBound);
-            addEdge(&graph, outBound, inBound, weight);
             addVertex(&graph, &vertexCount, inBound);
+            addEdge(&graph, outBound, inBound, weight);
             if(!DIRECTED) addEdge(&graph, inBound, outBound, weight);
 
     } while (!strchr(numeric, '!'));
@@ -257,6 +291,8 @@ int main(){
     printf("Vertex count: %d\n", vertexCount);
     printMatrix(graph, vertexCount);
     printLists(graph, vertexCount);
+
+    depthFirstTraversal(graph, vertexCount);
 
     printf("\nSUCCESS!\n");
     return 0;
