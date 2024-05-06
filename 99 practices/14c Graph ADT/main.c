@@ -3,7 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#define DIRECTED 0
+#define DIRECTED 1
 
 #define TEXT_RESET printf("\e[m")
 #define COLOR_GRAY printf("\e[90m")
@@ -16,6 +16,7 @@ typedef struct graph{
     int visited;
     struct graph* nextVertex;
     struct graph* nextEdge;
+    struct graph* prevVertex;
 } GRAPH;
 
 typedef struct list{
@@ -76,6 +77,7 @@ void addEdge(GRAPH** graph, char outBound, char inBound, int weight){
         (*currentEdge)->vertexName = inBound;
         (*currentEdge)->edgeWeight = weight;
         (*currentEdge)->nextVertex = toVertex; // adds a connection back to vertex
+        (*currentEdge)->prevVertex = currentOutbound;
         return;
     }
 
@@ -89,6 +91,7 @@ void addEdge(GRAPH** graph, char outBound, char inBound, int weight){
     newEdge->vertexName = inBound;
     newEdge->edgeWeight = weight;
     newEdge->nextVertex = toVertex; // adds a connection back to vertex
+    newEdge->prevVertex = currentOutbound;
 
     // if at the end of the list, then insert at end
     if (!*currentEdge){
@@ -276,6 +279,90 @@ void breathFirstTraversal(GRAPH* graph){
     
 }
 
+void priorityQueue(LIST** list, GRAPH* data, int weight){
+    LIST* newNode = calloc(1, sizeof(LIST));
+    newNode->data = data;
+    newNode->data->edgeWeight = weight;
+
+    if (!*list){
+        *list = newNode;
+        return;
+    }
+
+    LIST** current = list;
+    while (*current && (*current)->data->edgeWeight < weight){
+        current = &(*current)->next;
+        // if ((*current)->data->vertexName == data->vertexName && (*current)->data->edgeWeight > weight){
+        //     LIST* temp = (*current)->next;
+        //     *current = newNode;
+        //     newNode->next = temp;
+        //     return;
+        // }
+    }
+        
+    
+    if (!*current)
+        *current = newNode;
+    else {
+        LIST* temp = *current;
+        *current = newNode;
+        newNode->next = temp;
+    }
+}
+
+void printQueue(LIST* list){
+    printf("queue: ");
+    while (list){
+        printf("[%c %d]", list->data->vertexName, list->data->edgeWeight);
+        list = list->next;
+    }
+}
+
+void minimalSpanningTree(GRAPH* graph, int vertexCount){
+    printf("\nMinimal Spanning Tree: \n");
+
+    zeroVisited(graph);
+    GRAPH* solution = NULL;
+    int solutionSize = 0;
+    int solutionCost = 0;
+    LIST* pQueue = NULL;
+    GRAPH* currentVertex = graph;
+
+    priorityQueue(&pQueue, currentVertex, 0);
+
+    while (pQueue){
+        printQueue(pQueue);
+        currentVertex = dequeue(&pQueue);
+        printf("<%c %d> ", currentVertex->vertexName, !currentVertex->visited);
+        if (!currentVertex->visited){
+            currentVertex->visited = 1;
+            GRAPH* currentEdge = currentVertex->nextEdge;
+            printf(" %c -> ", currentVertex->vertexName);
+
+            if (currentEdge){
+                addVertex(&solution, &solutionSize, currentVertex->vertexName);
+                addVertex(&solution, &solutionSize, currentEdge->vertexName);
+                addEdge(&solution, currentVertex->vertexName, currentEdge->vertexName, currentVertex->edgeWeight);
+                if (!DIRECTED) addEdge(&solution, currentEdge->vertexName, currentVertex->vertexName, currentVertex->edgeWeight);
+                solutionCost += currentVertex->edgeWeight;
+            }
+            
+            while (currentEdge){
+                printf("[%c %d %d] ", currentEdge->vertexName, !currentEdge->nextVertex->visited, currentEdge->edgeWeight);
+                if (!currentEdge->nextVertex->visited)
+                    priorityQueue(&pQueue, currentEdge->nextVertex, currentEdge->edgeWeight);
+                currentEdge = currentEdge->nextEdge;
+            }
+            printf("%d \n", solutionCost);
+        }
+    }
+
+    printMatrix(solution, solutionSize);
+    printLists(solution, solutionSize);
+    printf("Cost: %d\n", solutionCost);
+
+}
+
 int main(){
 
     char* data = calloc(250, sizeof(char));
@@ -292,7 +379,8 @@ int main(){
     printf("Outbound_1, Inbound_1, Weight_1, [...]! as the terminator\n");
     printf("Example: A, B, 5, B, C, 7, C, A, 3!\n");
     printf("Test case: a, x, 1, x, h, 2, x, g, 3, g, h, 4, g, p, 5, h, p, 6, h, e, 7, e, y, 8, e, m, 9, y, m, 11, m, j, 11!\n");
-    
+    printf("Test case: a, b, 10, a, c, 5, a, d, 15, b, f, 30, d, b, 10, c, d, 10, d, f, 20, c, e, 3, e, f, 15!\n");
+
     scanf("%[^\n]249s", data);
     printf("\n");
 
@@ -318,6 +406,8 @@ int main(){
 
     depthFirstTraversal(graph);
     breathFirstTraversal(graph);
+
+    minimalSpanningTree(graph, vertexCount);
 
     printf("\nSUCCESS!\n");
     return 0;
