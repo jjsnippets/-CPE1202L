@@ -9,11 +9,7 @@ This is an actively worked on repository which contains all code for the above-m
 <br>
 
 > [!NOTE]
-> This repository may change from a public to a private one without any warning. This is to comply to the pledge signed below:
->
-> **COURSE SYLLABUS/COURSE POLICIES/Assignments, Quizzes, and Practical Activities**
-> <br>
-> The activities are to be done individually and submitted via Canvas. Administration deals with cases of copying following the university's procedures for disciplinary actions. Note that the university considers dishonesty or fraudulent acts a major offense. Thus, ***ensure that all work done is original and protect them from plagiarism by others***.
+> Repository soon slated for archival.
 
 <br><br><br>
 
