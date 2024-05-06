@@ -1,5 +1,4 @@
 # CPE 1202L (DATA STRUCTURES AND ALGORITHMS)
-> Check branches for codes of current activities.
 
 <br>
 
