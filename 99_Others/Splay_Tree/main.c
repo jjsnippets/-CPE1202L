@@ -1,4 +1,4 @@
-// WARNING: since this is a copy from [11]AVL, some comments may not relevant and some functions may not be called in this code
+// WARNING: since this is a copy from AVL, some comments may not relevant and some functions may not be called in this code
 
 #include <stdio.h>
 #include <conio.h>
